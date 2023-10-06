@@ -1,0 +1,9 @@
+/* Text Input */
+.input-field {
+  height: "20px";
+  border: "1px solid #EBEBEB";
+  background: "#f5f7f9";
+  width: "300px";
+  padding: "18px";
+  font-size: "medium";
+}

@@ -1,45 +1,53 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { TextInput, CustomButton } from "../components";
+import "../styles/login.css";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const changeHandler = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const submitHandler = () => {
-    return
-  }
+  const handleSubmit = () => {
+    return;
+  };
 
   return (
     <div className="flex">
       <section className="flex flex-1 bg-gray-100 min-h-screen">Right</section>
-      <section className="flex flex-1">
+      <section className="flex flex-col flex-1 justify-center items-center gap-10">
         <h1> LOGIN</h1>
-        <form style={styles.form} onSubmit={submitHandler}>
+        <form className="login-form" onSubmit={handleSubmit}>
           <TextInput
             type="email"
             name="email"
             label="Email"
             value={formData.email}
-            onChange={changeHandler}
+            onChange={handleChange}
           />
           <TextInput
             type="password"
             name="password"
             label="Password"
             value={formData.password}
-            onChange={changeHandler}
+            onChange={handleChange}
           />
-          <PrimaryButton type="submit" name="Login" />
+          <CustomButton type="submit" title="Login" />
         </form>
 
-        <div style={{ display: "flex", gap: 8 }}>
+        <div className="flex gap-2">
           Don't have an acoount?
-          <span style={styles.span} onClick={() => navigate("/signup")}>
+          <span
+            className="text-red-500 font-bold"
+            onClick={() => navigate("/signup")}
+          >
             Signup
           </span>
         </div>
