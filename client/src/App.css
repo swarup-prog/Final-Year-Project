@@ -3,6 +3,13 @@
   padding: 0;
 }
 
-/* Text Input  */
+/* Login Page  */
+.login-form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
 
 

@@ -1,5 +1,4 @@
 import { InputProps } from "../../types";
-import "../../styles/common.css";
 
 const TextInput = ({
   type,
@@ -14,7 +13,7 @@ const TextInput = ({
       <label style={{ fontSize: "16px", color: "#555555" }}>{label}</label>
       <input
         type={type}
-        className="input-field"
+        className="border rounded-lg py-3 px-2 w-80"
         style={{
           ...style,
         }}

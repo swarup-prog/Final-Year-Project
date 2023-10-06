@@ -13,7 +13,7 @@ const CustomButton = ({
       <button
         type={type}
         disabled={isDisabled}
-        className={`button ${className}`}
+        className={`button text-white px-8 py-2 bg-red-500 rounded-lg ${className}`}
         style={styles}
         onClick={onClick}
       >
