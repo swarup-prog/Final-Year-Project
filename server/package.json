@@ -4,7 +4,7 @@
   "description": "Backend for Gamer Conenct Application.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.js"
+    "start": "nodemon src/index.ts"
   },
   "author": "Swarup Lamichhane",
   "license": "ISC",
