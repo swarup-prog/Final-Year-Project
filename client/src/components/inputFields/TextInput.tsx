@@ -1,26 +1,24 @@
 import { InputProps } from "../../types";
 
-const TextInput = ({
-  type,
-  value,
-  onChange,
-  name,
-  label,
-  style,
-}: InputProps) => {
+const TextInput = ({ type, value, onChange, name, label }: InputProps) => {
   return (
-    <div className="flex flex-col gap-2">
-      <label style={{ fontSize: "16px", color: "#555555" }}>{label}</label>
-      <input
-        type={type}
-        className="border rounded-lg py-3 px-2 w-80"
-        style={{
-          ...style,
-        }}
-        name={name}
-        value={value}
-        onChange={onChange}
-      />
+    <div>
+      <label
+        htmlFor={name}
+        className="block overflow-hidden rounded-lg border border-gray-200 px-3 py-2 lg:w-[300px] shadow-sm focus-within:border-primary focus-within:ring-1 focus-within:ring-red-500 "
+      >
+        <span className="text-xs font-medium text-primaryT ">{label}</span>
+
+        <input
+          type={type}
+          id={name}
+          name={name}
+          value={value}
+          onChange={onChange}
+          placeholder={label}
+          className="mt-1 w-full border-none bg-transparent text-primaryT p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+        />
+      </label>
     </div>
   );
 };

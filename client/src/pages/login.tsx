@@ -1,14 +1,15 @@
 import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CiLight, CiDark } from "react-icons/ci";
 
-import { TextInput, CustomButton } from "../components";
+import { TextInput, CustomButton, ThemeSwitchButton } from "../components";
 
 import "../App.css";
+import bgimg from "../assets/bgimg.jpg";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { BiLogoGoogle } from "react-icons/bi";
 
 const Login = () => {
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -23,17 +24,23 @@ const Login = () => {
   };
 
   return (
-    <div className="flex">
-      <div className="absolute right-10 top-5">
-        <CiLight size={25} />
-      </div>
-      <section className="flex flex-1 bg-gray-100 min-h-screen">Right</section>
-      <section className="flex flex-col flex-1 justify-center items-center gap-10">
-        <span className="text-2xl font-bold">LOGIN</span>
+    <div className="flex justify-center items-center min-h-screen">
+      <ThemeSwitchButton />
+
+      <section
+        className=" hidden flex flex-1 bg-secondary min-h-screen lg:block"
+        style={{
+          background: `url(${bgimg})`,
+          backgroundPosition: "center",
+          backdropFilter: "blur(100px)",
+        }}
+      ></section>
+      <section className="flex flex-col justify-center items-center gap-10 min-w-full min-h-screen bg-secondary lg:flex-1 lg:min-w-0 ">
+        <span className="text-2xl text-primaryT font-bold">LOGIN</span>
         <form className="login-form" onSubmit={handleSubmit}>
           <TextInput
             type="text"
-            name="usename"
+            name="username"
             label="Username"
             value={formData.username}
             onChange={handleChange}
@@ -47,16 +54,23 @@ const Login = () => {
           />
           <CustomButton type="submit" title="Login" />
         </form>
-
-        <div className="flex gap-2">
+        <div className="text-primary hover:underline cursor-pointer">
+          Forgot Password?
+        </div>
+        <div className="flex gap-2 text-primaryT">
           Don't have an acount?
           <span
-            className="text-red-500 font-bold"
+            className="text-primary font-medium hover:underline cursor-pointer"
             onClick={() => navigate("/signup")}
           >
             Signup
           </span>
         </div>
+        <div className="text-primaryT">OR</div>
+        <CustomButton
+          title="Sign in with Google"
+          icon={<BiLogoGoogle size={25} />}
+        />
       </section>
     </div>
   );

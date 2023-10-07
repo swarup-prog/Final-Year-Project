@@ -7,3 +7,21 @@
 * {
   font-family: 'Poppins', sans-serif;
 }
+
+@layer base {
+  :root {
+    --color-primary: 0deg 84% 60%;
+    --color-secondary: 217deg 0% 100%;
+    --color--primary-content: 217°, 19%, 27%;
+    --color--secondary-content: 217deg 32.6% 17.5%;
+    --color-ternary-content: 0deg 84% 60%;
+  }
+  
+  [data-theme="dark"] {
+    --color-primary: 0deg 84% 60%;
+    --color-secondary: 224deg 71% 4%;
+    --color-primary-content: 220deg 13% 91%;
+    --color--secondary-content: 217deg 32.6% 17.5%;
+    --color-ternary-content: 0deg 84% 60%;
+  }
+}

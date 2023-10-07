@@ -1,6 +1,6 @@
-import React, { MouseEventHandler } from "react";
+import React, {  MouseEventHandler } from "react";
 
-export  type InputProps = {
+export  interface InputProps  {
   type: string; 
   value: string;
   name: string;
@@ -9,11 +9,12 @@ export  type InputProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export type ButtonProps = {
+export interface ButtonProps {
   isDisabled?: boolean;
   type?: "button" | "submit";
   title: string; 
   styles?: React.CSSProperties;
   className?: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  icon?: React.ReactNode
 }
