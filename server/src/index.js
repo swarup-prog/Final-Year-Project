@@ -1,10 +1,11 @@
-import dotenv from "dotenv";
-import express from "express";
-import helmet from "helmet";
-import cors from "cors";
-import fileUpload from "express-fileupload";
+require("dotenv").config();
+const express = require("express");
+const helmet = require("helmet");
+const cors = require("cors");
+const connection = require("./database/databaseConnection.js");
+const fileUpload = require("express-fileupload");
 
-dotenv.config();
+connection();
 
 const app = express();
 
