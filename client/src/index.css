@@ -15,6 +15,7 @@
     --color--primary-content: 217°, 19%, 27%;
     --color--secondary-content: 217deg 32.6% 17.5%;
     --color-ternary-content: 0deg 84% 60%;
+    --color-accent: 220deg 13% 91%;
   }
   
   [data-theme="dark"] {
@@ -23,5 +24,6 @@
     --color-primary-content: 220deg 13% 91%;
     --color--secondary-content: 217deg 32.6% 17.5%;
     --color-ternary-content: 0deg 84% 60%;
+    --color-accent: 217deg 19% 27%;
   }
 }

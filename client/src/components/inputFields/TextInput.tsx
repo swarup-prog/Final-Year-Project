@@ -5,7 +5,7 @@ const TextInput = ({ type, value, onChange, name, label }: InputProps) => {
     <div>
       <label
         htmlFor={name}
-        className="block overflow-hidden rounded-lg border border-gray-200 px-3 py-2 lg:w-[300px] shadow-sm focus-within:border-primary focus-within:ring-1 focus-within:ring-red-500 "
+        className="block overflow-hidden rounded-lg border border-accent px-3 py-2 lg:w-[300px] shadow-sm focus-within:border-primary focus-within:ring-1 focus-within:ring-red-500 "
       >
         <span className="text-xs font-medium text-primaryT ">{label}</span>
 

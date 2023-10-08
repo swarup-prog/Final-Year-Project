@@ -8,6 +8,7 @@ module.exports = {
         secondary: "hsl(var(--color-secondary) / <alpha-value>)",
         primaryT: "hsl(var(--color-primary-content) / <alpha-value>)",
         ternaryT: "hsl(var(--color-ternary-content) / <alpha-value>)",
+        accent: "hsl(var(--color-accent) / <alpha-value>)",
       },
     },
   },
