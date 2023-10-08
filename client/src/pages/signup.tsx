@@ -5,7 +5,6 @@ import { TextInput, CustomButton, ThemeSwitchButton } from "../components";
 
 import "../App.css";
 import bgimg from "../assets/bgimg.jpg";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { BiLogoGoogle } from "react-icons/bi";
 
 const Signup = () => {
@@ -15,6 +14,7 @@ const Signup = () => {
     email: "",
     username: "",
     password: "",
+    confirmPassword: "",
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -68,6 +68,13 @@ const Signup = () => {
             value={formData.password}
             onChange={handleChange}
           />
+          <TextInput
+            type="password"
+            name="confirmPassword"
+            label="Confirm Password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+          />
           <CustomButton type="submit" title="Signup" />
         </form>
 
@@ -80,11 +87,11 @@ const Signup = () => {
             Login
           </span>
         </div>
-        {/* <div className="text-primaryT">OR</div>
+        <div className="text-primaryT">OR</div>
         <CustomButton
           title="Sign in with Google"
           icon={<BiLogoGoogle size={25} />}
-        /> */}
+        />
       </section>
     </div>
   );
