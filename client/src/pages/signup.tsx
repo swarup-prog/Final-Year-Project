@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, MouseEventHandler, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { TextInput, CustomButton, ThemeSwitchButton } from "../components";
@@ -6,9 +6,11 @@ import { TextInput, CustomButton, ThemeSwitchButton } from "../components";
 import "../App.css";
 import bgimg from "../assets/bgimg.jpg";
 import { BiLogoGoogle } from "react-icons/bi";
+import { toastError, toastLoading, toastSuccess } from "../utils/toast";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,8 +23,12 @@ const Signup = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = () => {
-    return;
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    toastLoading("Loading");
+    toastError("Error");
+    toastSuccess("Success");
   };
 
   return (
@@ -75,7 +81,11 @@ const Signup = () => {
             value={formData.confirmPassword}
             onChange={handleChange}
           />
-          <CustomButton type="submit" title="Signup" />
+          <CustomButton
+            isDisabled={isLoading ? true : false}
+            type="submit"
+            title="Signup"
+          />
         </form>
 
         <div className="flex gap-2 text-primaryT">
