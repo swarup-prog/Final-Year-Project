@@ -26,7 +26,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <div className="flex justify-center items-center min-h-screen m-5 sm:m-0">
       <ThemeSwitchButton />
 
       <section
