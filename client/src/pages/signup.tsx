@@ -26,17 +26,12 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen m-5 sm:m-0">
+    <div className="flex justify-center items-center min-h-screen">
       <ThemeSwitchButton />
 
-      <section
-        className=" hidden flex flex-1 bg-secondary min-h-screen lg:block"
-        style={{
-          background: `url(${bgimg})`,
-          backgroundPosition: "center",
-          backdropFilter: "blur(100px)",
-        }}
-      ></section>
+      <section className=" hidden  flex-1 bg-secondary min-h-screen lg:flex">
+        <img src={bgimg} alt="" className="h-screen w-full object-cover" />
+      </section>
       <section className="flex flex-col justify-center items-center gap-10 min-w-full min-h-screen bg-secondary lg:flex-1 lg:min-w-0 ">
         <span className="text-2xl text-primaryT font-bold">SIGNUP</span>
         <form className="login-form" onSubmit={handleSubmit}>
