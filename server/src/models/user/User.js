@@ -24,6 +24,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  bio: {
+    type: String,
+    required: false,
+  },
+  profileImg: {
+    type: String,
+    required: false,
+  },
+  interestedGames: {
+    type: [String],
+    default: [],
+  },
 });
 
 userSchema.methods.generateAuthToken = function () {
