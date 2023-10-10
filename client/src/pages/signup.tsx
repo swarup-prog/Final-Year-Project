@@ -7,6 +7,8 @@ import "../App.css";
 import bgimg from "../assets/bgimg.jpg";
 import { BiLogoGoogle } from "react-icons/bi";
 import { toastError, toastLoading, toastSuccess } from "../utils/toast";
+import { PostRequest } from "../services/httpRequest";
+import { AxiosResponse } from "axios";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -24,12 +26,34 @@ const Signup = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const checkPasswordMatch = () => {
+    if (formData.password !== formData.confirmPassword) {
+      toastError("Password did not match!");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    toastLoading("Loading");
-    toastError("Error");
-    toastSuccess("Success");
+    toastLoading("Registering user");
+    const { confirmPassword, ...formDataRequest } = formData;
+    if (checkPasswordMatch()) {
+      const response: AxiosResponse = await PostRequest(
+        "/auth/register",
+        formDataRequest
+      );
+
+      if (response.status === 201) {
+        toastSuccess(response.data.message);
+        navigate("/");
+      } else {
+        toastError(response.data.message);
+      }
+      setIsLoading(false);
+      console.log("response", response);
+    }
   };
 
   return (

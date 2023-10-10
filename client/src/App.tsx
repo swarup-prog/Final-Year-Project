@@ -1,10 +1,9 @@
 import "./App.css";
-import SideNavigation from "./components/SideNavigation";
 import { Routes, Route } from "react-router-dom";
 import { Login, Signup } from "./pages";
 import { Toaster } from "sonner";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "./app/store";
 
 function App() {
