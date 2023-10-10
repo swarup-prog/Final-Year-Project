@@ -18,3 +18,10 @@ export interface ButtonProps {
   onClick?: MouseEventHandler<HTMLButtonElement>;
   icon?: React.ReactNode
 }
+
+export interface UserData {
+  name?: string;
+  email?: string;
+  username?: string;
+  password?: string;
+}

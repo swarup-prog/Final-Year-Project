@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { TextInput, CustomButton, ThemeSwitchButton } from "../components";
@@ -7,9 +7,13 @@ import "../App.css";
 import bgimg from "../assets/bgimg.jpg";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { BiLogoGoogle } from "react-icons/bi";
+import { toastError, toastLoading, toastSuccess } from "../utils/toast";
+import { register } from "../apis/auth";
 
 const Login = () => {
   const navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -19,23 +23,31 @@ const Login = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = () => {
-    return;
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    toastLoading("Loading");
+    toastError("Error");
+    toastSuccess("Success");
+    await register(formData);
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <ThemeSwitchButton />
-
       <section
-        className=" hidden flex flex-1 bg-secondary min-h-screen lg:block"
+        className=" hidden  flex-1 bg-secondary min-h-screen lg:flex"
         style={{
           background: `url(${bgimg})`,
           backgroundPosition: "center",
-          backdropFilter: "blur(100px)",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "50%",
+          height: "100%",
         }}
       ></section>
-      <section className="flex flex-col justify-center items-center gap-10 min-w-full min-h-screen bg-secondary lg:flex-1 lg:min-w-0 ">
+      <section className="flex flex-col justify-center items-center gap-10 min-w-full min-h-screen bg-secondary lg:flex-1 lg:min-w-0 p-5 lg:ml-[50%] ">
+        <ThemeSwitchButton />
         <span className="text-2xl text-primaryT font-bold">LOGIN</span>
         <form className="login-form" onSubmit={handleSubmit}>
           <TextInput
@@ -52,7 +64,11 @@ const Login = () => {
             value={formData.password}
             onChange={handleChange}
           />
-          <CustomButton type="submit" title="Login" />
+          <CustomButton
+            isDisabled={isLoading ? true : false}
+            type="submit"
+            title="Login"
+          />
         </form>
         <div className="text-primary hover:underline cursor-pointer">
           Forgot Password?
