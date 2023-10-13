@@ -20,20 +20,19 @@ const register = async (req, res) => {
       return res.status(409).send({ message: "User already registered." });
     }
 
-    // Checking if username is already taken
-    const validUsername = await User.findOne({ username: body.username });
-    if (validUsername) {
-      return res
-        .status(409)
-        .send({ message: "Username already taken just like your crush LMAO." });
-    }
-
     // Password Hashing
     const salt = await bcrypt.genSalt(Number(process.env.SALT));
     const hashedPassword = await bcrypt.hash(body.password, salt);
 
+    //Generate Username
+    const genUsername = body.email.match(/^(.+)@/)[1];
+
     // Send the data to database
-    await new User({ ...body, password: hashedPassword }).save();
+    await new User({
+      ...body,
+      username: genUsername,
+      password: hashedPassword,
+    }).save();
     res.status(201).send({ message: "User registered successfully." });
   } catch (error) {
     console.log("Error in registration", error);
