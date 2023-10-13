@@ -5,7 +5,6 @@ import { TextInput, CustomButton, ThemeSwitchButton } from "../components";
 
 import "../App.css";
 import bgimg from "../assets/bgimg.jpg";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { BiLogoGoogle } from "react-icons/bi";
 import { toastError, toastLoading, toastSuccess } from "../utils/toast";
 import { register } from "../apis/auth";

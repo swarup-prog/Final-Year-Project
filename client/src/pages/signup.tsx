@@ -17,7 +17,6 @@ const Signup = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    username: "",
     password: "",
     confirmPassword: "",
   });
@@ -40,19 +39,21 @@ const Signup = () => {
     toastLoading("Registering user");
     const { confirmPassword, ...formDataRequest } = formData;
     if (checkPasswordMatch()) {
-      const response: AxiosResponse = await PostRequest(
-        "/auth/register",
-        formDataRequest
-      );
-
-      if (response.status === 201) {
-        toastSuccess(response.data.message);
-        navigate("/");
-      } else {
-        toastError(response.data.message);
+      try {
+        const response: AxiosResponse = await PostRequest(
+          "/auth/register",
+          formDataRequest
+        );
+        if (response.status === 201) {
+          toastSuccess(response.data.message);
+          navigate("/");
+        }
+        console.log("response", response);
+      } catch (error: any) {
+        toastError(error.response.data.message);
       }
+
       setIsLoading(false);
-      console.log("response", response);
     }
   };
 
@@ -88,13 +89,7 @@ const Signup = () => {
             value={formData.email}
             onChange={handleChange}
           />
-          <TextInput
-            type="text"
-            name="username"
-            label="Username"
-            value={formData.username}
-            onChange={handleChange}
-          />
+
           <TextInput
             type="password"
             name="password"
@@ -110,7 +105,7 @@ const Signup = () => {
             onChange={handleChange}
           />
           <CustomButton
-            isDisabled={isLoading ? true : false}
+            // isDisabled={isLoading ? true : false}
             type="submit"
             title="Signup"
           />
