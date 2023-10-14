@@ -6,7 +6,7 @@ import { TextInput, CustomButton, ThemeSwitchButton } from "../components";
 import "../App.css";
 import bgimg from "../assets/bgimg.jpg";
 import { BiLogoGoogle } from "react-icons/bi";
-import { toastError, toastLoading, toastSuccess } from "../utils/toast";
+import { toastError, toastSuccess } from "../utils/toast";
 import { PostRequest } from "../services/httpRequest";
 import { AxiosResponse } from "axios";
 
@@ -36,7 +36,6 @@ const Signup = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    toastLoading("Registering user");
     const { confirmPassword, ...formDataRequest } = formData;
     if (checkPasswordMatch()) {
       try {

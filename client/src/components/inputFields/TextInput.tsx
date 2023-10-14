@@ -37,9 +37,9 @@ const TextInput = ({ type, value, onChange, name, label }: InputProps) => {
             onClick={handlePasswordVisibility}
           >
             {inputType === "password" ? (
-              <AiOutlineEyeInvisible size={20} />
+              <AiOutlineEyeInvisible size={20} className="text-primaryT" />
             ) : (
-              <AiOutlineEye size={20} />
+              <AiOutlineEye size={20} className="text-primaryT" />
             )}
           </span>
         )}
