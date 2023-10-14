@@ -14,6 +14,10 @@ const register = async (req, res) => {
     // Giving default role: user
     if (!body.role) body = { ...body, role: "user" };
 
+    //Giving Username
+    const genUsername = body.email.match(/^(.+)@/)[1];
+    body = { ...body, username: genUsername };
+
     // Checking if user already exists
     const user = await User.findOne({ email: body.email });
     if (user) {
@@ -24,13 +28,9 @@ const register = async (req, res) => {
     const salt = await bcrypt.genSalt(Number(process.env.SALT));
     const hashedPassword = await bcrypt.hash(body.password, salt);
 
-    //Generate Username
-    const genUsername = body.email.match(/^(.+)@/)[1];
-
     // Send the data to database
     await new User({
       ...body,
-      username: genUsername,
       password: hashedPassword,
     }).save();
     res.status(201).send({ message: "User registered successfully." });
