@@ -40,7 +40,32 @@ const register = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {};
+const login = async (req, res) => {
+  let { username, password } = req.body;
+
+  try {
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).send({ message: "Invalid username or password." });
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).send({ message: "Invalid username or password." });
+    }
+
+    const token = user.generateAuthToken();
+    res
+      .cookie("session-token", token, {
+        httpOnly: true,
+        sameSite: true,
+      })
+      .status(200)
+      .send({ token, message: "Login successful." });
+  } catch (error) {
+    res.status(500).send({ message: "Internal Server Error." });
+  }
+};
 
 const logout = async (req, res) => {};
 
