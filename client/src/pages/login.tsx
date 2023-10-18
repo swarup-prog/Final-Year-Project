@@ -6,8 +6,9 @@ import { TextInput, CustomButton, ThemeSwitchButton } from "../components";
 import "../App.css";
 import bgimg from "../assets/bgimg.jpg";
 import { BiLogoGoogle } from "react-icons/bi";
-import { toastError, toastLoading, toastSuccess } from "../utils/toast";
-import { register } from "../apis/auth";
+import { toastError, toastSuccess } from "../utils/toast";
+import { AxiosResponse } from "axios";
+import { PostRequest } from "../services/httpRequest";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,11 +25,19 @@ const Login = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
-    toastLoading("Loading");
-    toastError("Error");
-    toastSuccess("Success");
-    await register(formData);
+    try {
+      const response: AxiosResponse = await PostRequest(
+        "/auth/login",
+        formData
+      );
+      if (response.status === 201) {
+        toastSuccess(response.data.message);
+        navigate("/signup");
+      }
+      console.log("response", response);
+    } catch (error: any) {
+      toastError(error.response.data.message);
+    }
   };
 
   return (
