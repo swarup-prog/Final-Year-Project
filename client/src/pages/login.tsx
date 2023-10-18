@@ -32,6 +32,7 @@ const Login = () => {
       );
       if (response.status === 200) {
         toastSuccess(response.data.message);
+        localStorage.setItem("session-token", response.data.token);
         navigate("/signup");
       }
       console.log("response", response);
