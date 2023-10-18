@@ -30,7 +30,7 @@ const Login = () => {
         "/auth/login",
         formData
       );
-      if (response.status === 201) {
+      if (response.status === 200) {
         toastSuccess(response.data.message);
         navigate("/signup");
       }
