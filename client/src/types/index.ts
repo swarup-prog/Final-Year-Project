@@ -25,3 +25,9 @@ export interface UserData {
   username?: string;
   password?: string;
 }
+
+export interface AuthState {
+  loading: boolean
+  data: any
+  error: string | null | undefined
+}
