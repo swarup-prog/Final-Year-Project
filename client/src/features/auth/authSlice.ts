@@ -11,7 +11,7 @@ const initialState: AuthState = {
 export const fetchUserData = createAsyncThunk(
   "auth/fetchUserData",
   async (token: string) => {
-    const response = await axios.get("http://localhost:5000/api/auth", {
+    const response = await axios.get("http://localhost:5000/api/user", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
