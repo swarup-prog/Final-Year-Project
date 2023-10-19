@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { TextInput, CustomButton, ThemeSwitchButton } from "../../components";
 
-import "../App.css";
+import "../../App.css";
 import bgimg from "../assets/bgimg.jpg";
 import { BiLogoGoogle } from "react-icons/bi";
 import { toastError, toastSuccess } from "../../utils/toast";
