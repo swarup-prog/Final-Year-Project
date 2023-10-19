@@ -26,10 +26,12 @@ const userSchema = new mongoose.Schema({
   },
   bio: {
     type: String,
+    default: "",
     required: false,
   },
   profileImg: {
     type: String,
+    default: "",
     required: false,
   },
   interestedGames: {
