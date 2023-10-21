@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { TextInput, CustomButton, ThemeSwitchButton } from "../../components";
 
 import "../../App.css";
-import bgimg from "../assets/bgimg.jpg";
+import bgimg from "../../assets/bgimg.jpg";
 import { BiLogoGoogle } from "react-icons/bi";
 import { toastError, toastSuccess } from "../../utils/toast";
 import { PostRequest } from "../../services/httpRequest";
@@ -13,7 +13,7 @@ import { AxiosResponse } from "axios";
 const Signup = () => {
   const navigate = useNavigate();
 
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -35,7 +35,7 @@ const Signup = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
+    // setIsLoading(true);
     const { confirmPassword, ...formDataRequest } = formData;
     if (checkPasswordMatch()) {
       try {
@@ -52,7 +52,7 @@ const Signup = () => {
         toastError(error.response.data.message);
       }
 
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   };
 

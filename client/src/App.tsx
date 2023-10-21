@@ -1,6 +1,6 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import { Login, Signup } from "./pages";
+import { Dashboard, Login, Signup } from "./pages";
 import { Toaster } from "sonner";
 
 import { useSelector } from "react-redux";
@@ -17,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </div>
   );
