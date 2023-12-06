@@ -28,7 +28,7 @@ const Login = () => {
       if (response.status === 200) {
         toastSuccess(response.data.message);
         localStorage.setItem("session-token", response.data.token);
-        navigate("/signup");
+        navigate("/home");
       }
       console.log("response", response);
     } catch (error) {
@@ -74,7 +74,7 @@ const Login = () => {
             title="Login"
           />
         </form>
-        <div className="text-secondary hover:underline cursor-pointer">
+        <div className="text-accent hover:underline cursor-pointer">
           Forgot Password?
         </div>
         <div className="flex gap-2 text-secondary">
@@ -86,7 +86,7 @@ const Login = () => {
             Signup
           </span>
         </div>
-        <div className="text-secondary">OR</div>
+        <div className="text-secondary divider divider-accent">OR</div>
         <CustomButton
           title="Sign in with Google"
           icon={<BiLogoGoogle size={25} />}

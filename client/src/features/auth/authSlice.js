@@ -9,14 +9,9 @@ const initialState = {
 
 export const fetchUserData = createAsyncThunk(
   "auth/fetchUserData",
-  async (token) => {
+  async (id) => {
     const response = await axios.get(
-      "http://localhost:5000/api/user/getUserInfo",
-      {
-        headers: {
-          token: `Bearer ${token}`,
-        },
-      }
+      `http://localhost:8000/api/user/getUserInfo/${id}`
     );
     return response.data;
   }
