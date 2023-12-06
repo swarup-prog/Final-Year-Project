@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../app/store";
 
 import { toggleTheme } from "../../features/theme/themeSlice";
 import { CiDark, CiLight } from "react-icons/ci";
@@ -7,8 +6,8 @@ import { CiDark, CiLight } from "react-icons/ci";
 const ThemeSwitchButton = () => {
   const dispatch = useDispatch();
 
-  const isDarkMode: boolean = useSelector(
-    (state: RootState) => state.theme.isDarkMode
+  const isDarkMode = useSelector(
+    (state) => state.theme.isDarkMode
   );
 
   const handleTooggleTheme = () => {

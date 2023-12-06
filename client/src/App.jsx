@@ -1,15 +1,12 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
-import { Dashboard, Login, Signup } from "./pages";
+import { Route, Routes } from "react-router-dom";
 import { Toaster } from "sonner";
-
 import { useSelector } from "react-redux";
-import { RootState } from "./app/store";
+
+import { Dashboard, Login, Signup } from "./pages";
 
 function App() {
-  const isDarkMode: boolean = useSelector(
-    (state: RootState) => state.theme.isDarkMode
-  );
+  const isDarkMode = useSelector((state) => state.theme.isDarkMode);
 
   return (
     <div>

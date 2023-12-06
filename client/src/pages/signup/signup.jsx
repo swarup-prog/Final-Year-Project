@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { TextInput, CustomButton, ThemeSwitchButton } from "../../components";
@@ -8,7 +8,6 @@ import bgimg from "../../assets/bgimg.jpg";
 import { BiLogoGoogle } from "react-icons/bi";
 import { toastError, toastSuccess } from "../../utils/toast";
 import { PostRequest } from "../../services/httpRequest";
-import { AxiosResponse } from "axios";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -21,7 +20,7 @@ const Signup = () => {
     confirmPassword: "",
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -33,22 +32,19 @@ const Signup = () => {
     return true;
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // setIsLoading(true);
     const { confirmPassword, ...formDataRequest } = formData;
     if (checkPasswordMatch()) {
       try {
-        const response: AxiosResponse = await PostRequest(
-          "/auth/register",
-          formDataRequest
-        );
+        const response = await PostRequest("/auth/register", formDataRequest);
         if (response.status === 201) {
           toastSuccess(response.data.message);
           navigate("/");
         }
         console.log("response", response);
-      } catch (error: any) {
+      } catch (error) {
         toastError(error.response.data.message);
       }
 
@@ -59,7 +55,7 @@ const Signup = () => {
   return (
     <div className="flex justify-center items-center min-h-screen">
       <section
-        className=" hidden  flex-1 bg-secondary min-h-screen lg:flex"
+        className=" hidden  flex-1 bg-primary min-h-screen lg:flex"
         style={{
           background: `url(${bgimg})`,
           backgroundPosition: "center",
@@ -70,9 +66,9 @@ const Signup = () => {
           height: "100%",
         }}
       ></section>
-      <section className="flex flex-col justify-center items-center gap-10 min-w-full min-h-screen bg-secondary lg:flex-1 p-5 lg:min-w-0 lg:ml-[50%] ">
+      <section className="flex flex-col justify-center items-center gap-10 min-w-full min-h-screen bg-primary lg:flex-1 p-5 lg:min-w-0 lg:ml-[50%] ">
         <ThemeSwitchButton />
-        <span className="text-2xl text-primaryT font-bold">SIGNUP</span>
+        <span className="text-2xl text-secondary font-bold">SIGNUP</span>
         <form className="login-form" onSubmit={handleSubmit}>
           <TextInput
             type="text"
@@ -110,16 +106,16 @@ const Signup = () => {
           />
         </form>
 
-        <div className="flex gap-2 text-primaryT">
+        <div className="flex gap-2 text-secondary">
           Already have an acount?
           <span
-            className="text-primary font-medium hover:underline cursor-pointer"
+            className="text-accent font-medium hover:underline cursor-pointer"
             onClick={() => navigate("/")}
           >
             Login
           </span>
         </div>
-        <div className="text-primaryT">OR</div>
+        <div className="text-secondary">OR</div>
         <CustomButton
           title="Sign in with Google"
           icon={<BiLogoGoogle size={25} />}

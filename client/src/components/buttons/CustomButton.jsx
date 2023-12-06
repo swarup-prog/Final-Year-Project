@@ -1,5 +1,3 @@
-import { ButtonProps } from "../../types";
-
 const CustomButton = ({
   type,
   isDisabled,
@@ -8,13 +6,13 @@ const CustomButton = ({
   onClick,
   className,
   icon,
-}: ButtonProps) => {
+}) => {
   return (
     <div>
       <button
         type={type}
         disabled={isDisabled}
-        className={`flex gap-3 button text-white px-8 py-2 bg-primary rounded-lg ${className}`}
+        className={`flex gap-3 button text-white px-8 py-2 bg-accent rounded-lg ${className}`}
         style={{
           ...styles,
           background: `${isDisabled ? "#4B5563" : "#EF4343"}`,
