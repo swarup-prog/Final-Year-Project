@@ -115,7 +115,7 @@ const Signup = () => {
             Login
           </span>
         </div>
-        <div className="text-secondary">OR</div>
+        <div className="text-secondary divider divider-accent px-40">OR</div>
         <CustomButton
           title="Sign in with Google"
           icon={<BiLogoGoogle size={25} />}
