@@ -12,7 +12,6 @@ import { PostRequest } from "../../services/httpRequest";
 const Signup = () => {
   const navigate = useNavigate();
 
-  // const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -41,7 +40,7 @@ const Signup = () => {
         const response = await PostRequest("/auth/register", formDataRequest);
         if (response.status === 201) {
           toastSuccess(response.data.message);
-          navigate("/");
+          navigate("/login");
         }
         console.log("response", response);
       } catch (error) {
@@ -110,7 +109,7 @@ const Signup = () => {
           Already have an acount?
           <span
             className="text-accent font-medium hover:underline cursor-pointer"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/login")}
           >
             Login
           </span>

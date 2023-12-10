@@ -12,6 +12,13 @@
   gap: 30px;
 }
 
+/* Dashboard  */
+.dashboard-section {
+  display: flex;
+  padding:  16px;
+  border-radius: 6px;
+  background-color: #fff;
+}
 
 
 
