@@ -27,7 +27,7 @@ const SideNavigation = () => {
   };
 
   return (
-    <aside className="left-0items-center flex-col gap-2 flex-initial w-80 dashboard-section justify-between h-[804px]">
+    <aside className="left-0items-center flex-col gap-2 flex-initial w-52 md:w-80 dashboard-section justify-between h-[804px]">
       <div className="w-full flex flex-col gap-2">
         {user && user.role === "admin" ? (
           <>
@@ -85,10 +85,11 @@ const SideNavigation = () => {
           </>
         )}
       </div>
+
       <CustomButton
         title="Logout"
         onClick={handleLogout}
-        className={`w-[288px] h-[48px] justify-center items-center`}
+        className={`w-full h-[48px] justify-center items-center`}
       />
     </aside>
   );

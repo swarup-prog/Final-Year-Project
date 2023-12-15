@@ -1,13 +1,20 @@
 import { useNavigate } from "react-router-dom";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { FaRegBell } from "react-icons/fa";
+import logo from "../../assets/logo-red-trans.png";
 
 const Header = () => {
   const navigate = useNavigate();
 
   return (
     <header className="bg-primary">
-      <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="max-w-screen px-4 py-8  sm:flex sm:justify-between">
+        <img
+          src={logo}
+          alt="Gamer Connect"
+          width={200}
+          className="hidden sm:block"
+        />
         <div className="flex items-center justify-end gap-4">
           <div className="flex items-center gap-4">
             <div className="relative ">
