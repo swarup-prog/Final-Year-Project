@@ -7,7 +7,7 @@ const Dashboard = () => {
       {/* <Header /> */}
       {/* <SideNavigation /> */}
 
-      <section>sdfsdf</section>
+      <section>sdfsdf hello</section>
     </div>
   );
 };
