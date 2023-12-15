@@ -9,6 +9,7 @@ const cookieParser = require("cookie-parser");
 const authRoute = require("./routes/auth.routes.js");
 const userRoute = require("./routes/user.routes.js");
 const gameRoute = require("./routes/game.routes.js");
+const emailRoute = require("./routes/emailVerification.routes.js");
 
 connection();
 
@@ -31,6 +32,7 @@ app.use(fileUpload({ useTempFiles: true }));
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 app.use("/api/game", gameRoute);
+app.use("/api/email", emailRoute);
 
 app.listen(process.env.PORT, () => {
   console.log("Server is running on port : ", process.env.PORT);
