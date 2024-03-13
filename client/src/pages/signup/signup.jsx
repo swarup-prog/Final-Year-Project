@@ -51,6 +51,14 @@ const Signup = () => {
     }
   };
 
+  const handleGogoleAuth = () => {
+    let res = window.open(
+      `${import.meta.env.VITE_API_URL}/auth/google/callback`,
+      "_self"
+    );
+    console.log(res);
+  };
+
   return (
     <div className="flex justify-center items-center min-h-screen">
       <section
@@ -116,6 +124,7 @@ const Signup = () => {
         </div>
         <div className="text-secondary divider divider-accent px-40">OR</div>
         <CustomButton
+          onClick={handleGogoleAuth}
           title="Sign in with Google"
           icon={<BiLogoGoogle size={25} />}
         />
