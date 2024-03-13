@@ -21,13 +21,12 @@ const SideNavigation = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("session-token");
-    localStorage.removeItem("activeTab");
+    localStorage.clear();
     // dispatch(clearUserData());
   };
 
   return (
-    <aside className="left-0items-center flex-col gap-2 flex-initial w-52 md:w-80 dashboard-section justify-between h-[804px]">
+    <aside className="left-0items-center flex-col gap-2 flex-initial w-52 md:w-80 dashboard-section justify-between h-[890px]">
       <div className="w-full flex flex-col gap-2">
         {user && user.role === "admin" ? (
           <>
