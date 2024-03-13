@@ -5,9 +5,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import { fetchUserData } from "./features/auth/authSlice";
 
-import { Dashboard, Login, Signup } from "./pages";
+import {
+  Admin,
+  Error,
+  Login,
+  Signup,
+  Dashboard,
+  AdminGames,
+  AdminNews,
+  Users,
+} from "./pages";
 import { useEffect, useState } from "react";
-import { SideNavigation, Header } from "./components";
+import PrivateRoutes from "./utils/PrivateRoutes";
+
+import checkAuth from "./app/auth";
+import initializeApp from "./app/init";
+
+initializeApp();
+const token = checkAuth();
 
 function App() {
   const navigate = useNavigate();
@@ -25,43 +40,45 @@ function App() {
   }, [location.pathname]);
 
   const user = useSelector((state) => state.user.data);
-  console.log(user);
 
-  useEffect(() => {
-    if (user) {
-      user.role === "admin" ? navigate("/dashboard") : navigate("/home");
+  const loginNavigate = () => {
+    if (user.role === "admin") {
+      navigate("/admin/dashboard");
     } else {
-      navigate("/login");
+      navigate("/app");
     }
-  }, [user]);
+  };
 
   useEffect(() => {
     if (userToken) {
       const userId = jwtDecode(userToken)._id;
       dispatch(fetchUserData(userId));
+    } else {
+      navigate("/login");
     }
   }, [dispatch, userToken]);
 
+  useEffect(() => {
+    if (user) {
+      user.role === "admin" ? navigate("/admin/dashboard") : navigate("/home");
+    }
+  }, [user]);
+
   return (
-    <div className="flex flex-col h-screen overflow-hidden">
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-      </Routes>
+    <div>
       <Toaster theme={isDarkMode ? "dark" : "light"} richColors={true} />
-      {navbarVisible && <Header />}
-      <div className="flex h-[804px]">
-        {navbarVisible && (
-          <div className="w-fit bg-gray-200">
-            <SideNavigation />
-          </div>
-        )}
-        <div className="flex-grow-1 p-4 ">
-          <Routes>
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Routes>
-        </div>
-      </div>
+      <Routes>
+        <Route caseSensitive={true} path="/login" element={<Login />} />
+
+        <Route exact path="/signup" element={<Signup />} />
+        <Route path="/admin" element={<Admin />}>
+          <Route path="/admin/dashboard" element={<Dashboard />} />
+          <Route path="/admin/games" element={<AdminGames />} />
+          <Route path="/admin/news" element={<AdminNews />} />
+          <Route path="/admin/users" element={<Users />} />
+        </Route>
+        <Route path="*" element={<Error />} />
+      </Routes>
     </div>
   );
 }
