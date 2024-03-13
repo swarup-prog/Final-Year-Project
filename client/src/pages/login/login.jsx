@@ -8,6 +8,7 @@ import bgimg from "../../assets/bgimg.jpg";
 import { BiLogoGoogle } from "react-icons/bi";
 import { toastError, toastSuccess } from "../../utils/toast";
 import { PostRequest } from "../../services/httpRequest";
+import axios from "axios";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,11 +25,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await PostRequest("/auth/login", formData);
+      const response = await axios.post("/auth/login", formData);
       if (response.status === 200) {
         toastSuccess(response.data.message);
         localStorage.setItem("session-token", response.data.token);
-        navigate("/home");
       }
       console.log("response", response);
     } catch (error) {
@@ -77,6 +77,7 @@ const Login = () => {
         <div className="text-accent hover:underline cursor-pointer">
           Forgot Password?
         </div>
+
         <div className="flex gap-2 text-secondary">
           Don't have an acount?
           <span
