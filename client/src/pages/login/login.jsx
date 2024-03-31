@@ -28,6 +28,11 @@ const Login = () => {
       const response = await axios.post("/auth/login", formData);
       if (response.status === 200) {
         toastSuccess(response.data.message);
+        if (response.role === "admin") {
+          navigate("/admin/dashboard");
+        } else {
+          navigate("/app");
+        }
         localStorage.setItem("session-token", response.data.token);
       }
       console.log("response", response);
