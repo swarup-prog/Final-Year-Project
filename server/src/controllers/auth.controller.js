@@ -62,7 +62,7 @@ const login = async (req, res) => {
         sameSite: true,
       })
       .status(200)
-      .send({ token, message: "Login successful." });
+      .send({ token, role: user.role, message: "Login successful." });
   } catch (error) {
     res.status(500).send({ message: "Internal Server Error." });
   }
