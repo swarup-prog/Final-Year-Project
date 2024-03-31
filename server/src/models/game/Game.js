@@ -9,8 +9,8 @@ const gameSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  type: {
-    type: String,
+  genre: {
+    type: [String],
     required: true,
   },
   description: {
