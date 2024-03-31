@@ -25,7 +25,7 @@ const Admin = () => {
             );
           })}
         </aside>
-        <section className="px-10">
+        <section className="px-10 w-full">
           <Outlet />
         </section>
       </div>
