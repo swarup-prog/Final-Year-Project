@@ -1,10 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { authReducer, themeReducer, modalReducer } from "../features";
+import {
+  authReducer,
+  themeReducer,
+  modalReducer,
+  gameReducer,
+} from "../features";
 
 export const store = configureStore({
   reducer: {
     theme: themeReducer,
     user: authReducer,
     modal: modalReducer,
+    games: gameReducer,
   },
 });
