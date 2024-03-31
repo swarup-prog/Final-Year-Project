@@ -20,6 +20,7 @@ import PrivateRoutes from "./utils/PrivateRoutes";
 
 import checkAuth from "./app/auth";
 import initializeApp from "./app/init";
+import { fetchGames } from "./features/game/gameSlice";
 
 initializeApp();
 const token = checkAuth();
@@ -53,6 +54,7 @@ function App() {
     if (userToken) {
       const userId = jwtDecode(userToken)._id;
       dispatch(fetchUserData(userId));
+      dispatch(fetchGames());
     } else {
       navigate("/login");
     }
@@ -60,7 +62,7 @@ function App() {
 
   useEffect(() => {
     if (user) {
-      user.role === "admin" ? navigate("/admin/dashboard") : navigate("/home");
+      user.role === "admin" ? navigate("/admin/dashboard") : navigate("/app");
     }
   }, [user]);
 
