@@ -10,9 +10,7 @@ const initialState = {
 export const fetchUserData = createAsyncThunk(
   "auth/fetchUserData",
   async (id) => {
-    const response = await axios.get(
-      `http://localhost:8000/api/user/getUserInfo/${id}`
-    );
+    const response = await axios.get(`/user/getUserInfo/${id}`);
     return response.data;
   }
 );
