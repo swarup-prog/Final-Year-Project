@@ -4,8 +4,8 @@ const AdminGames = () => {
   const games = useSelector((state) => state.games.data);
 
   return (
-    <div className="w-full">
-      <div className="overflow-x-auto w-full">
+    <div className="w-full text-secondary">
+      <div className="overflow-x-auto mx-5">
         <table className="table w-full">
           {/* head */}
           <thead>
@@ -28,7 +28,7 @@ const AdminGames = () => {
                 <td>{game.name}</td>
                 <td>
                   {game.genre.map((genre, key) => (
-                    <div className="badge mr-1" key={key}>
+                    <div className="badge badge-primary mr-1" key={key}>
                       {genre}
                     </div>
                   ))}
