@@ -6,9 +6,7 @@ import { CiDark, CiLight } from "react-icons/ci";
 const ThemeSwitchButton = () => {
   const dispatch = useDispatch();
 
-  const isDarkMode = useSelector(
-    (state) => state.theme.isDarkMode
-  );
+  const isDarkMode = useSelector((state) => state.theme.isDarkMode);
 
   const handleTooggleTheme = () => {
     dispatch(toggleTheme());
