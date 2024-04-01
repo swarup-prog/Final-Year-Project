@@ -17,30 +17,9 @@ const Header = () => {
         />
         <div className="flex items-center justify-end gap-4">
           <div className="flex items-center gap-4">
-            <div className="relative ">
-              <label className="sr-only" htmlFor="search">
-                Search
-              </label>
-
-              <input
-                className="h-10 w-full rounded-full border-none bg-gray-200 pe-10 ps-4 text-sm shadow-lg sm:w-56 focus-within:border-accent focus-within:ring-1 focus-within:ring-red-500"
-                name="search"
-                type="search"
-                placeholder="Search "
-              />
-
-              <button
-                type="button"
-                className="absolute end-1 top-1/2 -translate-y-1/2 rounded-full bg-accent p-2 text-gray-600 transition hover:text-gray-700"
-              >
-                <span className="sr-only">Search</span>
-                <FaMagnifyingGlass color="white" />
-              </button>
-            </div>
-
             <a
               href="#"
-              className="block shrink-0 rounded-full bg-white p-2.5 text-gray-600 shadow-lg hover:text-gray-700"
+              className="block shrink-0 rounded-full bg-primary p-2.5 text-gray-600 shadow-lg hover:text-gray-700 shadow-accent"
             >
               <span className="sr-only">Notifications</span>
               <FaRegBell />
