@@ -21,6 +21,7 @@ import PrivateRoutes from "./utils/PrivateRoutes";
 import checkAuth from "./app/auth";
 import initializeApp from "./app/init";
 import { fetchGames } from "./features/game/gameSlice";
+import GameSelection from "./pages/app/gameSelection";
 
 initializeApp();
 const token = checkAuth();
@@ -45,8 +46,11 @@ function App() {
   const loginNavigate = () => {
     if (user.role === "admin") {
       navigate("/admin/dashboard");
-    } else {
+    } else if (user.role != "admin" && user.interestedGames.length >= 1) {
+      console.log("app", user.interestedGames.length);
       navigate("/app");
+    } else {
+      navigate("/interestedGameSelection");
     }
   };
 
@@ -62,7 +66,11 @@ function App() {
 
   useEffect(() => {
     if (user) {
-      user.role === "admin" ? navigate("/admin/dashboard") : navigate("/app");
+      user.role === "admin"
+        ? navigate("/admin/dashboard")
+        : user.role != "admin" && user.interestedGames.length >= 1
+        ? navigate("/app")
+        : navigate("/gameSelection");
     }
   }, [user]);
 
@@ -79,6 +87,7 @@ function App() {
           <Route path="/admin/news" element={<AdminNews />} />
           <Route path="/admin/users" element={<Users />} />
         </Route>
+        <Route path="/gameSelection" element={<GameSelection />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </div>
