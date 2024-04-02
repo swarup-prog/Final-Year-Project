@@ -55,6 +55,9 @@ const login = async (req, res) => {
       return res.status(401).send({ message: "Invalid username or password." });
     }
 
+    const userWithoutPassword = { ...user._doc };
+    delete userWithoutPassword.password;
+
     const token = user.generateAuthToken();
     res
       .cookie("session-token", token, {
@@ -62,8 +65,9 @@ const login = async (req, res) => {
         sameSite: true,
       })
       .status(200)
-      .send({ token, role: user.role, message: "Login successful." });
+      .send({ token, user: userWithoutPassword, message: "Login successful." });
   } catch (error) {
+    console.log(error);
     res.status(500).send({ message: "Internal Server Error." });
   }
 };
