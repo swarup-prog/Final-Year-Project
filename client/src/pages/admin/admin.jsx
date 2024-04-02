@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { Header, SideNavigation } from "../../components";
+import { Header, SideNavigation, ThemeSwitchButton } from "../../components";
 import adminRoutes from "../../routes/adminRoutes";
 import Tab from "../../components/navigation/Tab";
 import { useNavigate } from "react-router-dom";
@@ -10,13 +10,16 @@ const Admin = () => {
     .replace("/admin/", "")
     .replace("-", " ");
   return (
-    <div className="w-full h-screen">
+    <div className="w-full h-screen bg-primary">
       <Header />
-      <div className="flex w-full px-5">
-        <aside>
+      <ThemeSwitchButton />
+      <div className="flex w-full">
+        <aside className="bg-primary p-5 flex flex-col gap-2">
+          {/* <ThemeSwitchButton /> */}
           {adminRoutes.map((route, k) => {
             return (
               <Tab
+                key={k}
                 title={route.name}
                 onClick={() => navigate(route.path)}
                 icon={route.icon}
@@ -25,11 +28,12 @@ const Admin = () => {
             );
           })}
         </aside>
-        <section className="px-10 w-full">
-          <Outlet />
+        <section className="p-3 w-full bg-ternary h-[89vh]">
+          <div className="bg-primary h-full rounded-md overflow-y-auto p-2">
+            <Outlet />
+          </div>
         </section>
       </div>
-      {/* <Outlet /> */}
     </div>
   );
 };
