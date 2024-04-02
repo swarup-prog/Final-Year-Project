@@ -16,4 +16,27 @@ const getUserInfo = async (req, res) => {
   }
 };
 
-module.exports = { getUserInfo };
+const updateInterestedGames = async (req, res) => {
+  try {
+    const user = await User.findById(req.body.userId);
+    if (!user) {
+      return res.status(404).send({ message: "User not found" });
+    }
+
+    user.interestedGames = req.body.interestedGames;
+
+    await user.save();
+
+    const userWithoutPassword = { ...user._doc };
+    delete userWithoutPassword.password;
+
+    res
+      .status(200)
+      .send({ message: "Interested games updated successfully", user: user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+};
+
+module.exports = { getUserInfo, updateInterestedGames };
