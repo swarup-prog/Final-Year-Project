@@ -2,11 +2,11 @@ import Login from "./login/login";
 
 import Signup from "./signup/signup";
 
-import Admin from "./adminDashboard/admin";
-import Dashboard from "./adminDashboard/components/dashboard";
-import AdminGames from "./adminDashboard/components/adminGames";
-import AdminNews from "./adminDashboard/components/adminNews";
-import Users from "./adminDashboard/components/users";
+import Admin from "./admin/admin";
+import Dashboard from "./admin/components/dashboard";
+import AdminGames from "./admin/components/adminGames";
+import AdminNews from "./admin/components/adminNews";
+import Users from "./admin/components/users";
 
 import Error from "./error/error";
 
