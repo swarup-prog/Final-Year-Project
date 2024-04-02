@@ -28,10 +28,14 @@ const Login = () => {
       const response = await axios.post("/auth/login", formData);
       if (response.status === 200) {
         toastSuccess(response.data.message);
-        if (response.role === "admin") {
+        console.log(response);
+        if (response.data.user.role === "admin") {
           navigate("/admin/dashboard");
-        } else {
+        } else if (response.data.user.interestedGames.length >= 1) {
+          console.log("login", response.data.user.interestedGames.length);
           navigate("/app");
+        } else {
+          navigate("/gameSelection");
         }
         localStorage.setItem("session-token", response.data.token);
       }
