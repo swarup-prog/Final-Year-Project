@@ -35,7 +35,8 @@ const userSchema = new mongoose.Schema({
     required: false,
   },
   interestedGames: {
-    type: [String],
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Game",
     default: [],
   },
 });
