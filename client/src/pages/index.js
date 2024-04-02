@@ -8,6 +8,8 @@ import AdminGames from "./admin/components/adminGames";
 import AdminNews from "./admin/components/adminNews";
 import Users from "./admin/components/users";
 
+import GameSelection from "./app/gameSelection";
+
 import Error from "./error/error";
 
 import OTPInput from "./otpverification/otpInput";
