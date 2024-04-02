@@ -1,10 +1,18 @@
-import { useNavigate } from "react-router-dom";
-import { FaMagnifyingGlass } from "react-icons/fa6";
-import { FaRegBell } from "react-icons/fa";
+import { useState } from "react";
 import logo from "../../assets/logo-red-trans.png";
+import { BiLogOut } from "react-icons/bi";
+import { clearUserData } from "../../features/auth/authSlice";
 
 const Header = () => {
-  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const logoutClickHandler = () => {
+    dispatch(clearUserData());
+    navigate("/login");
+  };
 
   return (
     <header className="bg-primary">
@@ -16,29 +24,32 @@ const Header = () => {
           className="hidden sm:block"
         />
         <div className="flex items-center justify-end gap-4">
-          <div className="flex items-center gap-4">
-            <a
-              href="#"
-              className="block shrink-0 rounded-full bg-primary p-2.5 text-gray-600 shadow-lg hover:text-gray-700 shadow-accent"
-            >
-              <span className="sr-only">Notifications</span>
-              <FaRegBell />
-            </a>
-          </div>
-
           <span
             aria-hidden="true"
             className="block h-6 w-px rounded-full bg-gray-200"
           ></span>
 
-          <a href="#" className="block shrink-0">
+          <span className="block shrink-0" onClick={toggleDropdown}>
             <span className="sr-only">Profile</span>
             <img
               alt="Man"
               src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
               className="h-10 w-10 rounded-full object-cover"
             />
-          </a>
+          </span>
+          {isOpen && (
+            <div className="absolute top-20 end-2 z-10 mt-3 w-56 divide-y divide-ternary rounded-md border border-ternary bg-primary shadow-lg transition-transform duration-300 ease-in-out transform translate-y-2">
+              <div className="p-2">
+                <span
+                  className=" cursor-pointer flex items-center rounded-lg px-4 py-2 text-sm text-red-500 hover:bg-ternary  hover:text-red-700"
+                  onClick={logoutClickHandler}
+                >
+                  <BiLogOut className={`h-4 w-4 mr-2`} />
+                  Logout
+                </span>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </header>
