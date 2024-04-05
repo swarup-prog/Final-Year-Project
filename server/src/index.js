@@ -7,6 +7,7 @@ const fileUpload = require("express-fileupload");
 const cookieParser = require("cookie-parser");
 const cookieSession = require("cookie-session");
 const passport = require("passport");
+const { createServer } = require("node:http");
 
 const passportSetup = require("./services/passport.js");
 
@@ -41,6 +42,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(appRoutes);
 
-app.listen(process.env.PORT, () => {
+const server = createServer(app);
+
+server.listen(process.env.PORT, () => {
   console.log("Server is running on port : ", process.env.PORT);
 });
