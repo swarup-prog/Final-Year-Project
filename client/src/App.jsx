@@ -14,6 +14,15 @@ import {
   AdminGames,
   AdminNews,
   Users,
+  GameSelection,
+  UserApp,
+  Home,
+  Profile,
+  Buddies,
+  Discover,
+  Community,
+  Notifications,
+  Messages,
 } from "./pages";
 import { useEffect, useState } from "react";
 import PrivateRoutes from "./utils/PrivateRoutes";
@@ -21,8 +30,6 @@ import PrivateRoutes from "./utils/PrivateRoutes";
 import checkAuth from "./app/auth";
 import initializeApp from "./app/init";
 import { fetchGames } from "./features/game/gameSlice";
-import GameSelection from "./pages/app/gameSelection";
-
 initializeApp();
 const token = checkAuth();
 
@@ -69,7 +76,7 @@ function App() {
       user.role === "admin"
         ? navigate("/admin/dashboard")
         : user.role != "admin" && user.interestedGames.length >= 1
-        ? navigate("/app")
+        ? navigate("/app/home")
         : navigate("/gameSelection");
     }
   }, [user]);
@@ -86,6 +93,15 @@ function App() {
           <Route path="/admin/games" element={<AdminGames />} />
           <Route path="/admin/news" element={<AdminNews />} />
           <Route path="/admin/users" element={<Users />} />
+        </Route>
+        <Route path="/app" element={<UserApp />}>
+          <Route path="/app/home" element={<Home />} />
+          <Route path="/app/profile" element={<Profile />} />
+          <Route path="/app/buddies" element={<Buddies />} />
+          <Route path="/app/discover" element={<Discover />} />
+          <Route path="/app/messages" element={<Messages />} />
+          <Route path="/app/notifications" element={<Notifications />} />
+          <Route path="/app/communities" element={<Community />} />
         </Route>
         <Route path="/gameSelection" element={<GameSelection />} />
         <Route path="*" element={<Error />} />
