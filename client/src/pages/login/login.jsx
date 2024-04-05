@@ -33,7 +33,7 @@ const Login = () => {
           navigate("/admin/dashboard");
         } else if (response.data.user.interestedGames.length >= 1) {
           console.log("login", response.data.user.interestedGames.length);
-          navigate("/app");
+          navigate("/app/home");
         } else {
           navigate("/gameSelection");
         }
