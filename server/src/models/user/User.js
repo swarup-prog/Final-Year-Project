@@ -39,6 +39,21 @@ const userSchema = new mongoose.Schema({
     ref: "Game",
     default: [],
   },
+  buddies: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "User",
+    default: [],
+  },
+  buddyRequest: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "User",
+    default: [],
+  },
+  pendingRequest: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "User",
+    default: [],
+  },
 });
 
 userSchema.methods.generateAuthToken = function () {
