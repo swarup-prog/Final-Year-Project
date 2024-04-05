@@ -1,9 +1,27 @@
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import logo from "../../assets/logo-red-trans.png";
 import { BiLogOut } from "react-icons/bi";
 import { clearUserData } from "../../features/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { CiDark, CiLight } from "react-icons/ci";
+import { toggleTheme } from "../../features/theme/themeSlice";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const isDarkMode = useSelector((state) => state.theme.isDarkMode);
+
+  const handleTooggleTheme = () => {
+    dispatch(toggleTheme());
+    if (isDarkMode) {
+      document.documentElement.setAttribute("data-theme", "light");
+    } else {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  };
+
   const [isOpen, setIsOpen] = useState(false);
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -40,6 +58,17 @@ const Header = () => {
           {isOpen && (
             <div className="absolute top-20 end-2 z-10 mt-3 w-56 divide-y divide-ternary rounded-md border border-ternary bg-primary shadow-lg transition-transform duration-300 ease-in-out transform translate-y-2">
               <div className="p-2">
+                <span
+                  className="cursor-pointer flex items-center rounded-lg px-4 py-2 text-sm text-secondary hover:bg-ternary "
+                  onClick={handleTooggleTheme}
+                >
+                  {!isDarkMode ? (
+                    <CiLight size={25} />
+                  ) : (
+                    <CiDark size={25} color="white" />
+                  )}
+                  Change Theme
+                </span>
                 <span
                   className=" cursor-pointer flex items-center rounded-lg px-4 py-2 text-sm text-red-500 hover:bg-ternary  hover:text-red-700"
                   onClick={logoutClickHandler}
