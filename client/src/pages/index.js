@@ -8,13 +8,21 @@ import AdminGames from "./admin/components/adminGames";
 import AdminNews from "./admin/components/adminNews";
 import Users from "./admin/components/users";
 
-import GameSelection from "./app/gameSelection";
-
 import Error from "./error/error";
 
 import OTPInput from "./otpverification/otpInput";
 
 import ResetPassword from "./otpverification/resetPassword";
+
+import GameSelection from "./app/gameSelection";
+import UserApp from "./app/UserApp";
+import Home from "./app/components/home";
+import Profile from "./app/components/profile";
+import Buddies from "./app/components/buddies";
+import Discover from "./app/components/discover";
+import Messages from "./app/components/messages";
+import Community from "./app/community";
+import Notifications from "./app/components/notifications";
 
 export {
   Login,
@@ -27,4 +35,13 @@ export {
   AdminGames,
   AdminNews,
   Users,
+  GameSelection,
+  UserApp,
+  Home,
+  Profile,
+  Buddies,
+  Discover,
+  Messages,
+  Community,
+  Notifications,
 };
