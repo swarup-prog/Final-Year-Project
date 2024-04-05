@@ -1,8 +1,7 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { Header, SideNavigation, ThemeSwitchButton } from "../../components";
 import adminRoutes from "../../routes/adminRoutes";
 import Tab from "../../components/navigation/Tab";
-import { useNavigate } from "react-router-dom";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -12,7 +11,6 @@ const Admin = () => {
   return (
     <div className="w-full h-screen bg-primary">
       <Header />
-      <ThemeSwitchButton />
       <div className="flex w-full">
         <aside className="bg-primary p-5 flex flex-col gap-2">
           {/* <ThemeSwitchButton /> */}
