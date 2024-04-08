@@ -30,24 +30,19 @@ import PrivateRoutes from "./utils/PrivateRoutes";
 import checkAuth from "./app/auth";
 import initializeApp from "./app/init";
 import { fetchGames } from "./features/game/gameSlice";
-initializeApp();
-const token = checkAuth();
+import axios from "axios";
 
 function App() {
+  initializeApp();
+  // const token = checkAuth();
   const navigate = useNavigate();
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
 
-  const pathsWithoutNavbar = ["/login", "/signup"];
-  const [navbarVisible, setNavbarVisible] = useState(true);
-
   const dispatch = useDispatch();
   const userToken = localStorage.getItem("session-token");
+  axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
 
-  useEffect(() => {
-    const path = location.pathname;
-    setNavbarVisible(!pathsWithoutNavbar.includes(path));
-  }, [location.pathname]);
-
+  //
   const user = useSelector((state) => state.user.data);
 
   const loginNavigate = () => {
