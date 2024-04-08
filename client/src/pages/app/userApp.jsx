@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { Header } from "../../components";
-import userRoutes from "../../routes/userRoutes";
+import { userDashboardRoutes } from "../../routes/userRoutes";
 import Tab from "../../components/navigation/Tab";
 import { useSelector } from "react-redux";
 
@@ -43,7 +43,7 @@ const UserApp = () => {
               ))}
             </div>
           </div>
-          {userRoutes.map((route, k) => {
+          {userDashboardRoutes.map((route, k) => {
             return (
               <Tab
                 key={k}
