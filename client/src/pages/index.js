@@ -21,7 +21,7 @@ import Profile from "./app/components/profile";
 import Buddies from "./app/components/buddies";
 import Discover from "./app/components/discover";
 import Messages from "./app/components/messages";
-import Community from "./app/community";
+import Community from "./app/components/community";
 import Notifications from "./app/components/notifications";
 
 export {
