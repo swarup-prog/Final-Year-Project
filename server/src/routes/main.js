@@ -3,7 +3,6 @@ const userRoute = require("./user.routes.js");
 const gameRoute = require("./game.routes.js");
 const emailRoute = require("./emailVerification.routes.js");
 const chatRoute = require("./chat.routes.js");
-
 const { protect } = require("../middlewares/auth.middleware.js");
 
 const router = require("express").Router();
