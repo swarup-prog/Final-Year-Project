@@ -58,9 +58,13 @@ const userSchema = new mongoose.Schema({
 
 userSchema.methods.generateAuthToken = function () {
   try {
-    const token = jwt.sign({ _id: this._id }, process.env.JWT_SECRET_KEY, {
-      expiresIn: "20d",
-    });
+    const token = jwt.sign(
+      { _id: this._id, role: this.role },
+      process.env.JWT_SECRET_KEY,
+      {
+        expiresIn: "20d",
+      }
+    );
     return token;
   } catch (error) {
     throw new Error("Token generation error: " + error.message);
