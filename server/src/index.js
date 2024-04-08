@@ -13,6 +13,7 @@ const { Server } = require("socket.io");
 const passportSetup = require("./services/passport.js");
 
 const appRoutes = require("./routes/main.js");
+const { errorHandler, notFound } = require("./middlewares/error.middleware.js");
 
 connection();
 
@@ -41,6 +42,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(appRoutes);
+app.use(notFound);
+app.use(errorHandler);
 
 const server = createServer(app);
 
