@@ -5,9 +5,9 @@ const getUserInfo = async (req, res) => {
     const userId = req.params.id;
     const user = await User.findById(userId, { password: 0, __v: 0 })
       .populate("interestedGames")
-      .populate("buddies")
-      .populate("pendingRequest")
-      .populate("buddyRequest");
+      .populate("buddies", "-password")
+      .populate("pendingRequest", "-password")
+      .populate("buddyRequest", "-password");
 
     if (!user) {
       return res.status(404).send({ message: "User not found." });
@@ -63,7 +63,7 @@ const updateInterestedGames = async (req, res) => {
 
 const sendBuddyRequest = async (req, res) => {
   try {
-    const user = await User.findById(req.body.userId);
+    const user = await User.findById(req.user._id);
     const addedUser = await User.findById(req.body.addedUserId);
 
     if (!user || !addedUser) {
