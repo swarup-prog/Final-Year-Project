@@ -2,33 +2,48 @@ const jwt = require("jsonwebtoken");
 const { User } = require("../models/User");
 const asyncHandler = require("express-async-handler");
 
-const protect = asyncHandler(async (req, res, next) => {
+const decodeToken = (req) => {
   let token;
-
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
   ) {
-    try {
-      token = req.headers.authorization.split(" ")[1];
+    token = req.headers.authorization.split(" ")[1];
+    if (!token) {
+      throw new Error("Not authorized, no token");
+    }
+    return jwt.verify(token, process.env.JWT_SECRET_KEY);
+  }
+};
 
-      //decodes token id
-      const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-      console.log("token", decoded);
+const protectAdmin = asyncHandler(async (req, res, next) => {
+  try {
+    let decodedToken = decodeToken(req);
 
-      req.user = await User.findById(decoded._id).select("-password");
-
-      next();
-    } catch (error) {
-      res.status(401);
+    if (dedodedToken.role !== "admin") {
       throw new Error("Not authorized, token failed");
     }
-  }
 
-  if (!token) {
+    req.user = await User.findById(decodedToken._id).select("-password");
+
+    next();
+  } catch (error) {
     res.status(401);
-    throw new Error("Not authorized, no token");
+    throw new Error("Not authorized, token failed");
   }
 });
 
-module.exports = { protect };
+const protect = asyncHandler(async (req, res, next) => {
+  try {
+    let decodedToken = decodeToken(req);
+
+    req.user = await User.findById(decodedToken._id).select("-password");
+
+    next();
+  } catch (error) {
+    res.status(401);
+    throw new Error("Not authorized, token failed");
+  }
+});
+
+module.exports = { protectAdmin, protect };
