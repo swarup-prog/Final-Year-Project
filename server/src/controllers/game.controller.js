@@ -1,4 +1,4 @@
-const { Game } = require("../models/game/Game.js");
+const { Game } = require("../models/Game.js");
 const { cloudinaryUpload } = require("../services/cloudinary.js");
 
 const addGame = async (req, res) => {
