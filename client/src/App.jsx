@@ -49,7 +49,6 @@ function App() {
     }
   }, [dispatch, userToken]);
 
-
   return (
     <div>
       <Toaster theme={isDarkMode ? "dark" : "light"} richColors={true} />
