@@ -91,7 +91,7 @@ function App() {
         </Route>
         <Route element={<PrivateRoutes role={"user"} />}>
           <Route path="/app" element={<UserApp />}>
-            {userRoutes.map((route, index) => 
+            {userRoutes.map((route, index) => (
               <Route path={route.path} element={route.element} key={index} />
             ))}
           </Route>
