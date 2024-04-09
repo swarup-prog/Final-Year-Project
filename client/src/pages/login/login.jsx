@@ -83,6 +83,17 @@ const Login = () => {
             title="Login"
           />
         </form>
+        <div
+          className="text-accent hover:underline cursor-pointer"
+          onClick={() => {
+            setFormData({
+              username: "guest",
+              password: "Guest123$",
+            });
+          }}
+        >
+          Seed User
+        </div>
         <div className="text-accent hover:underline cursor-pointer">
           Forgot Password?
         </div>
