@@ -30,11 +30,11 @@ import PrivateRoutes from "./utils/PrivateRoutes";
 import checkAuth from "./app/auth";
 import initializeApp from "./app/init";
 import { fetchGames } from "./features/game/gameSlice";
+import { adminRoutes, userRoutes } from "./routes";
 import axios from "axios";
 
 function App() {
   initializeApp();
-  // const token = checkAuth();
   const navigate = useNavigate();
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
 
@@ -81,24 +81,22 @@ function App() {
       <Toaster theme={isDarkMode ? "dark" : "light"} richColors={true} />
       <Routes>
         <Route caseSensitive={true} path="/login" element={<Login />} />
-
         <Route exact path="/signup" element={<Signup />} />
-        <Route path="/admin" element={<Admin />}>
-          <Route path="/admin/dashboard" element={<Dashboard />} />
-          <Route path="/admin/games" element={<AdminGames />} />
-          <Route path="/admin/news" element={<AdminNews />} />
-          <Route path="/admin/users" element={<Users />} />
+        <Route element={<PrivateRoutes role={"admin"} />}>
+          <Route path="/admin" element={<Admin />}>
+            {adminRoutes.map((route, index) => (
+              <Route path={route.path} element={route.element} key={index} />
+            ))}
+          </Route>
         </Route>
-        <Route path="/app" element={<UserApp />}>
-          <Route path="/app/home" element={<Home />} />
-          <Route path="/app/profile" element={<Profile />} />
-          <Route path="/app/buddies" element={<Buddies />} />
-          <Route path="/app/discover" element={<Discover />} />
-          <Route path="/app/messages" element={<Messages />} />
-          <Route path="/app/notifications" element={<Notifications />} />
-          <Route path="/app/communities" element={<Community />} />
+        <Route element={<PrivateRoutes role={"user"} />}>
+          <Route path="/app" element={<UserApp />}>
+            {userRoutes.map((route, index) => (
+              <Route path={route.path} element={route.element} key={index} />
+            ))}
+          </Route>
+          <Route path="/gameSelection" element={<GameSelection />} />
         </Route>
-        <Route path="/gameSelection" element={<GameSelection />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </div>
