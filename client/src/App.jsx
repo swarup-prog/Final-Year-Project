@@ -1,37 +1,18 @@
 import "./App.css";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { Toaster } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import { fetchUserData } from "./features/auth/authSlice";
 
-import {
-  Admin,
-  Error,
-  Login,
-  Signup,
-  Dashboard,
-  AdminGames,
-  AdminNews,
-  Users,
-  GameSelection,
-  UserApp,
-  Home,
-  Profile,
-  Buddies,
-  Discover,
-  Community,
-  Notifications,
-  Messages,
-} from "./pages";
-import { useEffect, useState } from "react";
+import { Admin, Error, Login, Signup, GameSelection, UserApp } from "./pages";
+import { useEffect } from "react";
 import PrivateRoutes from "./utils/PrivateRoutes";
 
 import checkAuth from "./app/auth";
 import initializeApp from "./app/init";
 import { fetchGames } from "./features/game/gameSlice";
 import { adminRoutes, userRoutes } from "./routes";
-import axios from "axios";
 
 function App() {
   initializeApp();
@@ -39,47 +20,44 @@ function App() {
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
 
   const dispatch = useDispatch();
-  const userToken = localStorage.getItem("session-token");
-  axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+  const userToken = checkAuth();
+  console.log(userToken);
 
-  //
   const user = useSelector((state) => state.user.data);
+  let path;
+  let decodedToken;
+  if (userToken) {
+    decodedToken = jwtDecode(userToken);
 
-  const loginNavigate = () => {
-    if (user.role === "admin") {
-      navigate("/admin/dashboard");
-    } else if (user.role != "admin" && user.interestedGames.length >= 1) {
-      console.log("app", user.interestedGames.length);
-      navigate("/app");
+    if (decodedToken.role === "admin") {
+      path = "/admin/dashboard";
     } else {
-      navigate("/interestedGameSelection");
+      path = "/app/home";
+      if (user?.interestedGames.length === 0) {
+        console.log("length", user?.interestedGames.length);
+        navigate("/gameSelection");
+      }
     }
-  };
+  }
 
   useEffect(() => {
     if (userToken) {
-      const userId = jwtDecode(userToken)._id;
-      dispatch(fetchUserData(userId));
+      dispatch(fetchUserData(decodedToken._id));
       dispatch(fetchGames());
     } else {
       navigate("/login");
     }
   }, [dispatch, userToken]);
 
-  useEffect(() => {
-    if (user) {
-      user.role === "admin"
-        ? navigate("/admin/dashboard")
-        : user.role != "admin" && user.interestedGames.length >= 1
-        ? navigate("/app/home")
-        : navigate("/gameSelection");
-    }
-  }, [user]);
 
   return (
     <div>
       <Toaster theme={isDarkMode ? "dark" : "light"} richColors={true} />
       <Routes>
+        <Route
+          path="*"
+          element={<Navigate to={userToken ? path : "/login"} replace />}
+        />
         <Route caseSensitive={true} path="/login" element={<Login />} />
         <Route exact path="/signup" element={<Signup />} />
         <Route element={<PrivateRoutes role={"admin"} />}>
