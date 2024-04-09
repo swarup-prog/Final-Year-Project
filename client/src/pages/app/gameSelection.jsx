@@ -37,7 +37,7 @@ const GameSelection = () => {
         if (response.status === 200) {
           dispatch(fetchUserData(user?._id));
           toastSuccess(response.data.message);
-          navigate("/app");
+          navigate("/app/home");
         }
       }
     } catch (error) {
