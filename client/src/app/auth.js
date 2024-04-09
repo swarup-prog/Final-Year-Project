@@ -1,12 +1,12 @@
 import axios from "axios";
+import { getUserRole } from "../services";
 
 const checkAuth = () => {
   /* Getting token value stored in local storage, 
   if token is not present then open login page */
-  const TOKEN = localStorage.getItem("access-token");
+  const TOKEN = localStorage.getItem("session-token");
   const PUBLIC_ROUTES = [
     "/login",
-    "/login/admin",
     "/signup",
     "/forgot-password",
     "/reset-password",
@@ -18,9 +18,10 @@ const checkAuth = () => {
 
   if (!TOKEN && !isPublicPage) {
     window.location.href = "/login";
-    return;
-  } else {
+    return { TOKEN: "", route: "" };
+  } else if (TOKEN) {
     axios.defaults.headers.common["Authorization"] = `Bearer ${TOKEN}`;
+    const role = getUserRole(TOKEN);
 
     return TOKEN;
   }
