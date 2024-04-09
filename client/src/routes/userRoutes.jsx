@@ -8,7 +8,7 @@ import { BsChatDots } from "react-icons/bs";
 
 const iconSize = 25;
 
-const userRoutes = [
+export const userDashboardRoutes = [
   {
     path: "/app/home",
     name: "Home",
@@ -45,5 +45,3 @@ const userRoutes = [
     icon: <CgCommunity size={iconSize} />,
   },
 ];
-
-export default userRoutes;
