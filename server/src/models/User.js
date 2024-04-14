@@ -3,58 +3,61 @@ const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const passwordComplexity = require("joi-password-complexity");
 
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    username: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    role: {
+      type: String,
+      required: true,
+    },
+    bio: {
+      type: String,
+      default: "",
+      required: false,
+    },
+    profileImg: {
+      type: String,
+      default: "",
+      required: false,
+    },
+    interestedGames: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Game",
+      default: [],
+    },
+    buddies: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "User",
+      default: [],
+    },
+    buddyRequest: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "User",
+      default: [],
+    },
+    pendingRequest: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "User",
+      default: [],
+    },
   },
-  email: {
-    type: String,
-    required: true,
-  },
-  username: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  role: {
-    type: String,
-    required: true,
-  },
-  bio: {
-    type: String,
-    default: "",
-    required: false,
-  },
-  profileImg: {
-    type: String,
-    default: "",
-    required: false,
-  },
-  interestedGames: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: "Game",
-    default: [],
-  },
-  buddies: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: "User",
-    default: [],
-  },
-  buddyRequest: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: "User",
-    default: [],
-  },
-  pendingRequest: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: "User",
-    default: [],
-  },
-});
+  { timestamps: true }
+);
 
 userSchema.methods.generateAuthToken = function () {
   try {
