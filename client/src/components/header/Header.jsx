@@ -16,27 +16,23 @@ import {
   MenuItem,
   MenuList,
   Tooltip,
+  useColorMode,
 } from "@chakra-ui/react";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const isDarkMode = useSelector((state) => state.theme.isDarkMode);
+  const { toggleColorMode } = useColorMode();
 
-  const handleTooggleTheme = () => {
-    dispatch(toggleTheme());
-    if (isDarkMode) {
-      document.documentElement.setAttribute("data-theme", "light");
-    } else {
-      document.documentElement.setAttribute("data-theme", "dark");
-    }
-  };
+  const isDarkMode = useSelector((state) => state.theme.isDarkMode);
 
   const handleLogout = () => {
     dispatch(clearUserData());
     navigate("/login");
   };
+
+  const user = useSelector((state) => state.user.data);
 
   return (
     <header className="bg-primary">
@@ -53,7 +49,7 @@ const Header = () => {
             <MenuButton
               as={Avatar}
               size={"sm"}
-              src={"https://bit.ly/dan-abramov"}
+              src={user?.profileImg ?? "https://bit.ly/dan-abramov"}
             />
           </Tooltip>
 
@@ -61,7 +57,7 @@ const Header = () => {
             <MenuGroup title="Profile">
               <MenuItem
                 icon={<Icon as={isDarkMode ? CiDark : CiLight} />}
-                onClick={handleTooggleTheme}
+                onClick={toggleColorMode}
               >
                 Change Theme
               </MenuItem>

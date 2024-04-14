@@ -4,6 +4,7 @@ import {
   themeReducer,
   modalReducer,
   gameReducer,
+  chatReducer,
 } from "../features";
 
 export const store = configureStore({
@@ -12,5 +13,6 @@ export const store = configureStore({
     user: authReducer,
     modal: modalReducer,
     games: gameReducer,
+    chat: chatReducer,
   },
 });

@@ -7,28 +7,21 @@ import {
   ModalHeader,
   Tooltip,
 } from "@chakra-ui/react";
+import CustomButton from "../buttons/CustomButton";
 
-import { ReactElement, ReactNode } from "react";
-
-const CustomModal = ({ children, icon, title, tooltipTitle, background }) => {
+const CustomModal = ({ children, icon, title, background, className }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
-      <Tooltip label={tooltipTitle} aria-label="Notification">
-        <Button
-          onClick={onOpen}
-          leftIcon={icon}
-          bg={background ?? "transparent"}
-        >
-          {title}
-        </Button>
-      </Tooltip>
+      <CustomButton title={title} onClick={onOpen} />
 
       <Modal onClose={onClose} size={"lg"} isOpen={isOpen}>
         <ModalOverlay />
         <ModalHeader>{title}</ModalHeader>
-        <ModalContent>{children}</ModalContent>
+        <ModalContent p={5} justifyContent={"center"}>
+          {children}
+        </ModalContent>
       </Modal>
     </>
   );

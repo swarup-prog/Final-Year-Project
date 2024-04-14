@@ -13,6 +13,7 @@ import checkAuth from "./app/auth";
 import initializeApp from "./app/init";
 import { fetchGames } from "./features/game/gameSlice";
 import { adminRoutes, userRoutes } from "./routes";
+import { clearActiveChat, fetchUserChats } from "./features/chat/chatSlice";
 
 function App() {
   initializeApp();
@@ -39,11 +40,20 @@ function App() {
       }
     }
   }
+  const curentPath = window.location.pathname;
+
+  console.log("currentPath", curentPath);
+  useEffect(() => {
+    if (!curentPath.startsWith("/app/messages/")) {
+      dispatch(clearActiveChat());
+    }
+  }, [curentPath]);
 
   useEffect(() => {
     if (userToken) {
       dispatch(fetchUserData(decodedToken._id));
       dispatch(fetchGames());
+      dispatch(fetchUserChats());
     } else {
       navigate("/login");
     }

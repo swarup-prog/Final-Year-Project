@@ -7,6 +7,7 @@ import Dashboard from "./admin/components/dashboard";
 import AdminGames from "./admin/components/adminGames";
 import AdminNews from "./admin/components/adminNews";
 import Users from "./admin/components/users";
+import Reports from "./admin/components/reports";
 
 import Error from "./error/error";
 
@@ -23,6 +24,7 @@ import Discover from "./app/components/discover";
 import Messages from "./app/components/messages";
 import Community from "./app/components/community";
 import Notifications from "./app/components/notifications";
+import Chat from "./app/components/chat";
 
 export {
   Login,
@@ -44,4 +46,6 @@ export {
   Messages,
   Community,
   Notifications,
+  Chat,
+  Reports,
 };

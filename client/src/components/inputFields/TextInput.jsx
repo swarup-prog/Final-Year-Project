@@ -1,7 +1,7 @@
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useState } from "react";
 
-const TextInput = ({ type, value, onChange, name, label }) => {
+const TextInput = ({ type, value, onChange, className = "", name, label }) => {
   const [inputType, setInputType] = useState(type);
 
   const handlePasswordVisibility = () => {
@@ -13,10 +13,10 @@ const TextInput = ({ type, value, onChange, name, label }) => {
   };
 
   return (
-    <div className="relative">
+    <div className={`relative `}>
       <label
         htmlFor={name}
-        className="min-w-[332px] block overflow-hidden rounded-lg border border-ternary px-3 py-2 lg:w-[300px] shadow-sm focus-within:border-accent focus-within:ring-1 focus-within:ring-red-500 "
+        className={`${className} min-w-[332px] block overflow-hidden bg-primary rounded-lg border border-ternary px-3 py-2 lg:w-[full] shadow-sm focus-within:border-accent focus-within:ring-1 focus-within:ring-red-500 `}
       >
         <span className="text-xs font-medium text-secondary ">{label}</span>
 

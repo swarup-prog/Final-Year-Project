@@ -2,6 +2,7 @@ import {
   AdminGames,
   AdminNews,
   Buddies,
+  Chat,
   Community,
   Dashboard,
   Discover,
@@ -9,6 +10,7 @@ import {
   Messages,
   Notifications,
   Profile,
+  Reports,
   Users,
 } from "../pages";
 
@@ -32,6 +34,10 @@ const userRoutes = [
   {
     path: "/app/messages",
     element: <Messages />,
+  },
+  {
+    path: "/app/messages/chat/",
+    element: <Chat />,
   },
   {
     path: "/app/notifications",
@@ -59,6 +65,10 @@ const adminRoutes = [
   {
     path: "/admin/users",
     element: <Users />,
+  },
+  {
+    path: "/admin/reports",
+    element: <Reports />,
   },
 ];
 
