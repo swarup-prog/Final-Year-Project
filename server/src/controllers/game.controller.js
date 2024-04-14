@@ -35,4 +35,14 @@ const getGames = async (req, res) => {
   }
 };
 
-module.exports = { addGame, getGames };
+const getTotalGames = async (req, res) => {
+  try {
+    const games = await Game.find();
+    return res.status(200).json({ totalGames: games.length });
+  } catch (error) {
+    console.error("Error retrieving games:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+module.exports = { addGame, getGames, getTotalGames };

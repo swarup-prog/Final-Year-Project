@@ -38,6 +38,16 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+const getTotalUsers = async (req, res) => {
+  try {
+    const users = await User.find({ role: { $ne: "admin" } });
+    return res.status(200).json({ totalUsers: users.length });
+  } catch (error) {
+    console.error("Error retrieving user:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 const updateInterestedGames = async (req, res) => {
   try {
     const user = await User.findById(req.body.userId);
@@ -88,4 +98,5 @@ module.exports = {
   updateInterestedGames,
   getAllUsers,
   sendBuddyRequest,
+  getTotalUsers,
 };
