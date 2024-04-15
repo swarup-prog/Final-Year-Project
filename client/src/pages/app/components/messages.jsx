@@ -6,15 +6,20 @@ import axios from "axios";
 import { getSenderFull } from "../../../services/chatLogic";
 import { useNavigate } from "react-router-dom";
 import { BiSearch, BiSearchAlt } from "react-icons/bi";
-import { Icon, Stack } from "@chakra-ui/react";
+import { Icon, Stack, useDisclosure } from "@chakra-ui/react";
 import UserListItem from "../../../components/user/UserListItem";
 import UserBadge from "../../../components/user/UserBadge";
 import { useDispatch } from "react-redux";
-import { setActiveChat } from "../../../features/chat/chatSlice";
+import {
+  fetchUserChats,
+  setActiveChat,
+} from "../../../features/chat/chatSlice";
 
 const Messages = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [teamName, setTeamName] = useState("");
   const [teamMembers, setTeamMembers] = useState([]);
@@ -33,7 +38,7 @@ const Messages = () => {
   const accessChat = (id) => async () => {
     try {
       const { data } = await axios.post("/chat", { userId: id });
-      if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+      dispatch(fetchUserChats());
     } catch (error) {
       console.log(error);
       toastError("Failed to access chat");
@@ -67,7 +72,7 @@ const Messages = () => {
         name: teamName,
         users: JSON.stringify(teamMembers.map((m) => m._id)),
       });
-      setChats([data, ...chats]);
+      dispatch(fetchUserChats());
       onclose();
       toastError("Team created successfully");
     } catch (error) {
@@ -234,9 +239,9 @@ const Messages = () => {
                   key={chat._id}
                   id={chat._id}
                   chat={chat}
-                  name={getSenderFull(user, chat.users).name}
-                  profileImg={getSenderFull(user, chat.users).profileImg}
-                  username={getSenderFull(user, chat.users).username}
+                  name={getSenderFull(user?._id, chat.users).name}
+                  profileImg={getSenderFull(user?._id, chat.users).profileImg}
+                  username={getSenderFull(user?._id, chat.users).username}
                   isMessage={true}
                 />
               )
