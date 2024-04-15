@@ -34,7 +34,7 @@ function App() {
       path = "/admin/dashboard";
     } else {
       path = "/app/home";
-      if (user?.interestedGames.length === 0) {
+      if (user && user?.interestedGames.length === 0) {
         console.log("length", user?.interestedGames.length);
         navigate("/gameSelection");
       }
