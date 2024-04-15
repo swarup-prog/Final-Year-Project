@@ -3,6 +3,7 @@ const userRoute = require("./user.routes.js");
 const gameRoute = require("./game.routes.js");
 const emailRoute = require("./emailVerification.routes.js");
 const chatRoute = require("./chat.routes.js");
+const messageRoute = require("./message.routes.js");
 const { protect } = require("../middlewares/auth.middleware.js");
 
 const router = require("express").Router();
@@ -12,5 +13,6 @@ router.use("/api/user", protect, userRoute);
 router.use("/api/game", protect, gameRoute);
 router.use("/api/email", protect, emailRoute);
 router.use("/api/chat", protect, chatRoute);
+router.use("/api/message", protect, messageRoute);
 
 module.exports = router;
