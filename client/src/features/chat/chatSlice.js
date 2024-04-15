@@ -5,8 +5,8 @@ const initialState = {
   loading: false,
   data: null,
   error: null,
-  selectedChat: null,
-  chatActive: false,
+  selectedChat: JSON.parse(localStorage.getItem("selectedChat")) || null,
+  chatActive: localStorage.getItem("selectedChat") ? true : false,
 };
 
 export const fetchUserChats = createAsyncThunk(
@@ -22,10 +22,12 @@ const chatSlice = createSlice({
   initialState,
   reducers: {
     setActiveChat: (state, action) => {
+      localStorage.setItem("selectedChat", JSON.stringify(action.payload));
       state.selectedChat = action.payload;
       state.chatActive = true;
     },
     clearActiveChat: (state) => {
+      localStorage.removeItem("selectedChat");
       state.selectedChat = null;
       state.chatActive = false;
     },
