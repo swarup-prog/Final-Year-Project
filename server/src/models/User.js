@@ -32,8 +32,8 @@ const userSchema = new mongoose.Schema(
     },
     profileImg: {
       type: String,
-      default: "",
-      required: false,
+      default:
+        "https://res.cloudinary.com/dsu4m9vef/image/upload/v1713198772/jot0zv7vip4pgif50cft.png",
     },
     interestedGames: {
       type: [mongoose.Schema.Types.ObjectId],
