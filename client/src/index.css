@@ -25,5 +25,6 @@
 }
 
 .chat-heading {
-  @apply text-lg font-semibold text-secondary py-3 px-3
+  @apply text-lg font-bold text-secondary py-3 px-3 bg-ternary rounded-2xl 
 }
+
