@@ -55,11 +55,13 @@ const UserApp = () => {
             );
           })}
         </aside>
+
         <section className="p-3 w-full bg-ternary h-[91vh]">
-          <div className="bg-primary h-full rounded-md overflow-y-auto p-2">
+          <div className="bg-primary h-full rounded-md p-2">
             <Outlet />
           </div>
         </section>
+
         <aside className="md:min-w-[450px] max-h-[91vh] hidden lg:flex  flex-col md:my-2 md:gap-2 md:mr-2 ">
           {/* Friend Request  map data of user.buddyRequest make this and chat take half space in same  aside */}
           <div className="w-full h-full p-2 bg-primary rounded-md">
