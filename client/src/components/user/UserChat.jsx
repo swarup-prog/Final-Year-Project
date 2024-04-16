@@ -5,12 +5,35 @@ import { BiSend } from "react-icons/bi";
 import axios from "axios";
 import { toastError } from "../../utils/toast";
 import { UserMessages } from "..";
+import io from "socket.io-client";
+
+const ENDPOINT = import.meta.env.VITE_SOCKET_ENDPOINT;
+let socket, chatComapare;
 
 const UserChat = () => {
   const chat = useSelector((state) => state.chat.selectedChat);
+  const user = useSelector((state) => state.user.data);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
+  const [socketConnected, setSocketConnected] = useState(false);
+  const [typing, setTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      socket = io(ENDPOINT);
+      socket.emit("setup", user);
+      socket.on("connection", () => {
+        setSocketConnected(true);
+      });
+    }
+    return () => {
+      if (socket) {
+        socket.disconnect();
+      }
+    };
+  }, []);
 
   const fetchMessages = async () => {
     try {
@@ -23,13 +46,27 @@ const UserChat = () => {
       console.error(error);
       toastError("Failed to fetch messages");
     }
+    socket.emit("join chat", chat._id);
   };
 
   useEffect(() => {
     if (chat && chat._id) {
       fetchMessages();
+      chatComapare = chat;
     }
-  }, [chat]);
+  }, [chat, socketConnected]);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("message received", (message) => {
+        if (!chatComapare || chatComapare._id !== message.chat._id) {
+          //send notification
+        } else {
+          setMessages([...messages, message]);
+        }
+      });
+    }
+  });
 
   const handleChange = (e) => {
     setNewMessage(e.target.value);
@@ -44,12 +81,14 @@ const UserChat = () => {
 
   const sendMessage = async () => {
     try {
+      setNewMessage(""); // Move inside the try block after successful post
       const response = await axios.post("/message", {
         content: newMessage,
         chatId: chat._id,
       });
       console.log(response);
-      setNewMessage(""); // Move inside the try block after successful post
+      socket.emit("new message", response.data);
+      setMessages([...messages, response.data]);
     } catch (error) {
       console.error(error);
       toastError(
@@ -73,12 +112,12 @@ const UserChat = () => {
           color={"#EF4343"}
         />
       ) : (
-        <div className="flex-grow overflow-y-aut flex items-end w-full">
+        <div className="flex-grow overflow-y-auto flex items-end w-full">
           <UserMessages messages={messages} />
         </div>
       )}
       <form
-        className="bg-ternary p-3 rounded-2xl flex"
+        className="bg-ternary p-3 rounded-2xl flex sticky bottom-0 w-full"
         onSubmit={(e) => {
           e.preventDefault();
           sendMessage();
