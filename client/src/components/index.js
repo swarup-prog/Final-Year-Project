@@ -8,6 +8,7 @@ import UserListItem from "./user/UserListItem";
 import UserBadge from "./user/UserBadge";
 import UserChat from "./user/UserChat";
 import GroupChat from "./user/GroupChat";
+import UserMessages from "./user/UserMessages";
 
 export {
   TextInput,
@@ -20,4 +21,5 @@ export {
   UserListItem,
   UserChat,
   GroupChat,
+  UserMessages,
 };
