@@ -1,7 +1,7 @@
 import React, { useDeferredValue, useEffect, useState } from "react";
 import { CustomButton, CustomModal, TextInput } from "../../../components";
 import { useSelector } from "react-redux";
-import { toastError } from "../../../utils/toast";
+import { toastError, toastSuccess } from "../../../utils/toast";
 import axios from "axios";
 import { getSenderFull } from "../../../services/chatLogic";
 import { useNavigate } from "react-router-dom";
@@ -73,8 +73,8 @@ const Messages = () => {
         users: JSON.stringify(teamMembers.map((m) => m._id)),
       });
       dispatch(fetchUserChats());
-      onclose();
-      toastError("Team created successfully");
+      onClose();
+      toastSuccess("Team created successfully");
     } catch (error) {
       console.log(error);
       toastError("Failed to create team");
