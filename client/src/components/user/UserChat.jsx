@@ -17,16 +17,22 @@ const UserChat = () => {
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
   const [socketConnected, setSocketConnected] = useState(false);
-  const [typing, setTyping] = useState(false);
-  const [isTyping, setIsTyping] = useState(false);
+  // const [typing, setTyping] = useState(false);
+  // const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
     if (user) {
       socket = io(ENDPOINT);
       socket.emit("setup", user);
-      socket.on("connection", () => {
+      socket.on("connected", () => {
         setSocketConnected(true);
       });
+      // socket.on("typing", () => {
+      //   setIsTyping(true);
+      // });
+      // socket.on("stop typing", () => {
+      //   setIsTyping(false);
+      // });
     }
     return () => {
       if (socket) {
@@ -46,7 +52,7 @@ const UserChat = () => {
       console.error(error);
       toastError("Failed to fetch messages");
     }
-    socket.emit("join chat", chat._id);
+    socketConnected && socket.emit("join chat", chat._id);
   };
 
   useEffect(() => {
@@ -70,6 +76,27 @@ const UserChat = () => {
 
   const handleChange = (e) => {
     setNewMessage(e.target.value);
+
+    // Typing
+    // if (!socketConnected) return;
+
+    // if (!typing) {
+    //   setTyping(true);
+    //   socket.emit("typing", chat._id);
+    // }
+
+    // let lastTypingTime = new Date().getTime();
+
+    // let timerLength = 3000;
+    // setTimeout(() => {
+    //   let timeNow = new Date().getTime();
+    //   let timeDiff = timeNow - lastTypingTime;
+
+    //   if (timeDiff >= timerLength && typing) {
+    //     socket.emit("stop typing", chat._id);
+    //     setTyping(false);
+    //   }
+    // }, timerLength);
   };
 
   const handleKeyPress = async (e) => {
@@ -80,6 +107,7 @@ const UserChat = () => {
   };
 
   const sendMessage = async () => {
+    // socket.emit("stop typing", chat._id);
     try {
       setNewMessage(""); // Move inside the try block after successful post
       const response = await axios.post("/message", {
