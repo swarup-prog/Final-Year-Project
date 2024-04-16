@@ -60,7 +60,24 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
   console.log("User connected");
-  socket.on("disconnect", () => {
-    console.log("User disconnected");
+  socket.on("setup", (userData) => {
+    socket.join(userData._id);
+    console.log("User joined", userData._id);
+    socket.emit("connected");
+  });
+
+  socket.on("join chat", (room) => {
+    socket.join(room);
+    console.log("User joined chat room: ", room);
+  });
+
+  socket.on("new message", (message) => {
+    let chat = message.chat;
+
+    if (!chat.users) return console.log("chat.users not defined");
+    chat.users.forEach((user) => {
+      if (user._id === message.sender._id) return;
+      socket.in(user._id).emit("message received", message);
+    });
   });
 });
