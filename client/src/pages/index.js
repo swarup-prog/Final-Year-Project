@@ -11,12 +11,12 @@ import Reports from "./admin/components/reports";
 
 import Error from "./error/error";
 
-import OTPInput from "./otpverification/otpInput";
+import OTPInput from "./otpverification/OTPInput";
 
 import ResetPassword from "./otpverification/resetPassword";
 
 import GameSelection from "./app/gameSelection";
-import UserApp from "./app/UserApp";
+import UserApp from "./app/userApp";
 import Home from "./app/components/home";
 import Profile from "./app/components/profile";
 import Buddies from "./app/components/buddies";
