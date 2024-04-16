@@ -1,24 +1,28 @@
 import { useSelector } from "react-redux";
 import ScrollableFeed from "react-scrollable-feed";
-import {
-  formatDate,
-  isLastMessage,
-  isSameSender,
-} from "../../services/chatLogic";
+import { formatDate } from "../../services/chatLogic";
+import React, { useEffect, useRef } from "react";
 
 const Messages = ({ messages }) => {
   const user = useSelector((state) => state.user.data);
+  const endOfMessages = useRef(null); // Step 1
+
+  useEffect(() => {
+    if (endOfMessages.current) {
+      endOfMessages.current.scrollIntoView({ behavior: "smooth" }); // Step 2
+    }
+  }, [messages]);
 
   return (
-    <ScrollableFeed className="w-full">
+    <ScrollableFeed className="w-full max-h-full ">
       {messages &&
         messages.map((m, i) => (
           <div
+            key={m._id}
             className={`chat ${
-              m.sender._id === user._id ? "chat-end" : "chat-start"
+              m.sender._id === user?._id ? "chat-end" : "chat-start"
             }`}
           >
-            {/* <div className="flex" key={message._id}> */}
             <div className="chat-image avatar">
               <div className="w-10 rounded-full">
                 <img alt="profile" src={m.sender.profileImg} />
@@ -32,15 +36,17 @@ const Messages = ({ messages }) => {
             </div>
             <div
               className={`chat-bubble ${
-                m.sender._id === user._id ? "bg-accent" : "bg-ternary"
+                m.sender._id === user?._id
+                  ? "bg-accent text-white"
+                  : "bg-ternary"
               }`}
             >
               {m.content}
             </div>
             <div className="chat-footer opacity-50">Delivered</div>
           </div>
-          // </div>
         ))}
+      <div ref={endOfMessages}></div> {/* Step 3 */}
     </ScrollableFeed>
   );
 };
