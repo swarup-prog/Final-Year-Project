@@ -47,8 +47,20 @@ app.use(errorHandler);
 
 const server = createServer(app);
 
-const io = new Server(server, {});
-
 server.listen(process.env.PORT, () => {
   console.log("Server is running on port : ", process.env.PORT);
+});
+
+const io = new Server(server, {
+  pingTimeout: 60000,
+  cors: {
+    origin: "*",
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log("User connected");
+  socket.on("disconnect", () => {
+    console.log("User disconnected");
+  });
 });
