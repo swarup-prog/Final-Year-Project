@@ -82,7 +82,7 @@ const Messages = () => {
   };
 
   return (
-    <div className=" bg-primary text-secondary px-10 py-10 overflow-y-auto">
+    <div className=" bg-primary text-secondary px-10 py-10">
       <section className="flex justify-between items-center">
         <div className="text-xl text-accent font-semibold">Messages</div>
         <Stack gap={5} direction={"row"}>
