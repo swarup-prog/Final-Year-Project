@@ -7,7 +7,7 @@ const sendMessage = async (req, res) => {
 
   if (!content || !chatId) {
     console.log("Invalid data passeed into request");
-    return res.status(400).json({ msg: "Invalid data" });
+    return res.status(400).json({ message: "Invalid data" });
   }
 
   let newMessage = {
