@@ -14,6 +14,7 @@ import initializeApp from "./app/init";
 import { fetchGames } from "./features/game/gameSlice";
 import { adminRoutes, userRoutes } from "./routes";
 import { clearActiveChat, fetchUserChats } from "./features/chat/chatSlice";
+import { Spinner } from "@chakra-ui/react";
 
 function App() {
   initializeApp();
@@ -34,12 +35,13 @@ function App() {
       path = "/admin/dashboard";
     } else {
       path = "/app/home";
-      if (user && user?.interestedGames.length === 0) {
+      if (user && user.interestedGames?.length === 0) {
         console.log("length", user?.interestedGames.length);
         navigate("/gameSelection");
       }
     }
   }
+
   const curentPath = window.location.pathname;
 
   console.log("currentPath", curentPath);
