@@ -1,13 +1,23 @@
 import { useDeferredValue, useEffect, useState } from "react";
-import { toastError } from "../../../utils/toast";
+import { toastError, toastSuccess } from "../../../utils/toast";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RiUserAddLine } from "react-icons/ri";
+import { BiSearchAlt } from "react-icons/bi";
+import { Icon } from "@chakra-ui/react";
+import { LuUserCheck2, LuUserX2 } from "react-icons/lu";
+import { fetchUserData } from "../../../features/auth/authSlice";
 
 const Discover = () => {
+  const dispatch = useDispatch();
+
   const [users, setUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const deferredSearch = useDeferredValue(searchQuery);
+
+  const currentUser = useSelector((state) => state.user.data);
+
+  const [updateTrigger, setUpdateTrigger] = useState(false);
 
   const fetchAllUser = async () => {
     try {
@@ -21,15 +31,44 @@ const Discover = () => {
 
   useEffect(() => {
     fetchAllUser();
-  }, []);
-
-  const userData = useSelector((state) => state.user.data);
+  }, [updateTrigger]);
 
   const filteredUsers = users.filter(
     (user) =>
       user.username.toLowerCase().includes(deferredSearch.toLowerCase()) ||
       user.name.toLowerCase().includes(deferredSearch.toLowerCase())
   );
+
+  const handleBuddyRequest = async (id) => {
+    try {
+      // make a post request to send a buddy request
+      const response = await axios.patch("/user/sendBuddyRequest", {
+        addedUserId: id,
+      });
+      console.log(response.data);
+      toastSuccess(response.data.message);
+      setUpdateTrigger((prev) => !prev);
+      dispatch(fetchUserData());
+    } catch (error) {
+      console.log(error);
+      toastError("Failed to send buddy request");
+    }
+  };
+
+  const handleCancelRequest = async (id) => {
+    try {
+      const response = await axios.patch("/user/cancelBuddyRequest", {
+        addedUserId: id,
+      });
+      console.log(response.data);
+      setUpdateTrigger((prev) => !prev);
+      dispatch(fetchUserData());
+      toastSuccess(response.data.message);
+    } catch (error) {
+      console.log(error);
+      toastError("Failed to cancel request");
+    }
+  };
 
   const data = searchQuery !== "" ? filteredUsers : users;
 
@@ -51,18 +90,7 @@ const Discover = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search"
           />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 16 16"
-            fill="currentColor"
-            className="w-4 h-4 opacity-70 text-secondary"
-          >
-            <path
-              fillRule="evenodd"
-              d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-              clipRule="evenodd"
-            />
-          </svg>
+          <Icon as={BiSearchAlt} boxSize={7} />
         </label>
       </section>
       <section>
@@ -92,10 +120,34 @@ const Discover = () => {
               </div>
             </div>
             <div className="flex flex-col justify-center items-center gap-3">
-              <button className="btn btn-accent text-white">
-                <RiUserAddLine />
-                Connect
-              </button>
+              {
+                /* check if user is already a buddy or not */
+                currentUser?.buddies.some((buddy) => buddy._id === user._id) ? (
+                  <button className="btn btn-accent text-white w-[130px]">
+                    <LuUserCheck2 size={25} />
+                    Buddy
+                  </button>
+                ) : currentUser?.pendingRequest.some(
+                    (request) => request._id === user._id
+                  ) ? (
+                  <button
+                    className="btn btn-accent text-white w-[130px]"
+                    onClick={() => handleCancelRequest(user._id)}
+                  >
+                    <LuUserX2 size={25} />
+                    Cancel
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-accent text-white w-[130px]"
+                    onClick={() => handleBuddyRequest(user._id)}
+                  >
+                    <RiUserAddLine size={25} />
+                    Connect
+                  </button>
+                )
+              }
+
               <button className="text-accent font-semibold hover:underline">
                 View Profile
               </button>
