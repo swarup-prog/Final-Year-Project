@@ -83,10 +83,39 @@ const sendBuddyRequest = async (req, res) => {
     user.pendingRequest = [...user.pendingRequest, addedUser._id];
     addedUser.buddyRequest = [...addedUser.buddyRequest, user._id];
 
+    // create notification
+    const notification = new Notification({
+      user: addedUser._id,
+      type: "buddyRequest",
+      sender: user._id,
+    });
+    await notification.save();
+
     await user.save();
     await addedUser.save();
 
     res.status(200).send({ message: "Friend request sent!" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+};
+
+const cancelBuddyRequest = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    const addedUser = await User.findById;
+
+    if (!user || !addedUser) {
+      return res.status(404).send({ message: "User not found" });
+    }
+
+    user.pendingRequest = user.pendingRequest.filter(
+      (userId) => userId.toString() !== addedUser._id.toString()
+    );
+    addedUser.buddyRequest = addedUser.buddyRequest.filter(
+      (userId) => userId.toString() !== user._id.toString()
+    );
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "Internal Server Error" });
