@@ -9,6 +9,7 @@ import UserBadge from "./user/UserBadge";
 import UserChat from "./user/UserChat";
 import GroupChat from "./user/GroupChat";
 import UserMessages from "./user/UserMessages";
+import BuddyListItem from "./user/BuddyListItem";
 
 export {
   TextInput,
@@ -22,4 +23,5 @@ export {
   UserChat,
   GroupChat,
   UserMessages,
+  BuddyListItem,
 };
