@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LuUserX2 } from "react-icons/lu";
+import { BuddyListItem } from "../../../components";
 
 const Buddies = () => {
   const navigate = useNavigate();
@@ -67,23 +68,7 @@ const Buddies = () => {
         {user?.buddies.length > 0 ? (
           <div>
             {user.buddies.map((buddy, k) => (
-              <div
-                key={k}
-                className="card bg-primary border border-accent cursor-pointer"
-                onClick={() => navigate(`/app/profile/${buddy._id}`)}
-              >
-                <div className="card-body">
-                  <div className="flex justify-between items-center">
-                    <span className="text-lg font-bold text-accent">
-                      {buddy.name}
-                    </span>
-                    <span className="font-semibold">Buddy</span>
-                  </div>
-                  <span className="text-sm text-secondary">
-                    @{buddy.username}
-                  </span>
-                </div>
-              </div>
+              <BuddyListItem buddy={buddy} />
             ))}
           </div>
         ) : (
@@ -97,7 +82,6 @@ const Buddies = () => {
               className="btn btn-accent text-white"
               onClick={() => navigate("/app/discover")}
             >
-              {" "}
               Search for buddies
             </div>
           </div>
