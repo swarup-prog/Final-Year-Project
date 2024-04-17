@@ -1,3 +1,4 @@
+const { Notification } = require("../models/Notification");
 const { User } = require("../models/User");
 
 const getUserInfo = async (req, res) => {
@@ -31,7 +32,12 @@ const getAllUsers = async (req, res) => {
       .populate("pendingRequest")
       .populate("buddyRequest");
 
-    return res.status(200).json(users);
+    // filter out the user requesting the data
+    const filteredUsers = users.filter(
+      (user) => user._id.toString() !== req.user._id.toString()
+    );
+
+    return res.status(200).json(filteredUsers);
   } catch (error) {
     console.error("Error retrieving user:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -85,9 +91,10 @@ const sendBuddyRequest = async (req, res) => {
 
     // create notification
     const notification = new Notification({
-      user: addedUser._id,
-      type: "buddyRequest",
+      receiver: addedUser._id,
+      category: "buddyRequest",
       sender: user._id,
+      message: `${user.username} sent you a buddy request`,
     });
     await notification.save();
 
@@ -103,19 +110,32 @@ const sendBuddyRequest = async (req, res) => {
 
 const cancelBuddyRequest = async (req, res) => {
   try {
+    if (!req.user || !req.user._id || !req.body.addedUserId) {
+      console.log("Invalid request: User ID or Added User ID missing");
+      return res
+        .status(400)
+        .send({ message: "Invalid request: Missing user information" });
+    }
+
     const user = await User.findById(req.user._id);
-    const addedUser = await User.findById;
+    const addedUser = await User.findById(req.body.addedUserId);
 
     if (!user || !addedUser) {
+      console.log("User not found");
       return res.status(404).send({ message: "User not found" });
     }
 
     user.pendingRequest = user.pendingRequest.filter(
-      (userId) => userId.toString() !== addedUser._id.toString()
+      (userId) => !userId.equals(addedUser._id)
     );
     addedUser.buddyRequest = addedUser.buddyRequest.filter(
-      (userId) => userId.toString() !== user._id.toString()
+      (userId) => !userId.equals(user._id)
     );
+
+    await user.save();
+    await addedUser.save();
+
+    res.status(200).send({ message: "Buddy request cancelled!" });
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "Internal Server Error" });
@@ -128,4 +148,5 @@ module.exports = {
   getAllUsers,
   sendBuddyRequest,
   getTotalUsers,
+  cancelBuddyRequest,
 };
