@@ -83,4 +83,10 @@ io.on("connection", (socket) => {
       socket.in(user._id).emit("message received", message);
     });
   });
+
+  socket.on("new notification", (notification) => {
+    socket
+      .in(notification.user._id)
+      .emit("notification received", notification);
+  });
 });
