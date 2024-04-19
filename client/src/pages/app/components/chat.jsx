@@ -4,6 +4,7 @@ import { GroupChat, UserChat } from "../../../components";
 import { useSelector } from "react-redux";
 import { getSenderFull } from "../../../services/chatLogic";
 import { Spinner } from "@chakra-ui/react";
+import Loading from "../../loading/loading";
 
 const Chat = () => {
   const [isGroupChat, setIsGroupChat] = useState(false);
@@ -26,7 +27,9 @@ const Chat = () => {
 
   if (!chat || (user && !isGroupChat && !sender)) {
     return (
-      <Spinner size={"xl"} w={20} h={20} alignSelf={"center"} margin={"auto"} />
+      <div className="text-secondary w-full h-screen bg-primary">
+        <Loading />
+      </div>
     ); // Fallback or loading state
   }
 

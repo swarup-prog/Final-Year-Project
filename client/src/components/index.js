@@ -10,6 +10,7 @@ import UserChat from "./user/UserChat";
 import GroupChat from "./user/GroupChat";
 import UserMessages from "./user/UserMessages";
 import BuddyListItem from "./user/BuddyListItem";
+import ConnectButton from "./user/ConnectButton";
 
 export {
   TextInput,
@@ -24,4 +25,5 @@ export {
   GroupChat,
   UserMessages,
   BuddyListItem,
+  ConnectButton,
 };

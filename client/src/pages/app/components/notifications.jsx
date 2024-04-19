@@ -1,4 +1,8 @@
+import { useEffect } from "react";
+
 const Notifications = () => {
+  // useEffect(() => {}, []);
+
   return (
     <div className="text-secondary px-10 py-10 overflow-y-auto">
       <section>

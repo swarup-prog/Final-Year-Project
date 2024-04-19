@@ -15,6 +15,8 @@ import OTPInput from "./otpverification/OTPInput";
 
 import ResetPassword from "./otpverification/resetPassword";
 
+import Loading from "./loading/loading";
+
 import GameSelection from "./app/gameSelection";
 import UserApp from "./app/userApp";
 import Home from "./app/components/home";
@@ -36,6 +38,7 @@ export {
   Dashboard,
   AdminGames,
   AdminNews,
+  Loading,
   Users,
   GameSelection,
   UserApp,

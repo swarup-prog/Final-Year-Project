@@ -79,29 +79,84 @@ const updateInterestedGames = async (req, res) => {
 
 const sendBuddyRequest = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id);
-    const addedUser = await User.findById(req.body.addedUserId);
+    const userId = req.body.userId;
+    if (!userId) {
+      return res.status(400).send({ message: "User ID is required" });
+    }
+    console.log(userId, "userId");
 
-    if (!user || !addedUser) {
+    const addedUserId = req.body.addedUserId;
+    if (!addedUserId) {
+      return res.status(400).send({ message: "Added user ID is required" });
+    }
+
+    console.log(addedUserId, "addedUserId");
+
+    // Retrieve the user initiating the buddy request
+    const user = await User.findById(userId);
+    if (!user) {
       return res.status(404).send({ message: "User not found" });
     }
 
-    user.pendingRequest = [...user.pendingRequest, addedUser._id];
-    addedUser.buddyRequest = [...addedUser.buddyRequest, user._id];
+    // Retrieve the user receiving the buddy request
+    const addedUser = await User.findById(addedUserId);
+    if (!addedUser) {
+      return res.status(404).send({ message: "Added user not found" });
+    }
+
+    user.pendingRequest = [...user.pendingRequest, addedUserId];
+    addedUser.buddyRequest = [...addedUser.buddyRequest, userId];
 
     // create notification
     const notification = new Notification({
       receiver: addedUser._id,
       category: "buddyRequest",
       sender: user._id,
-      message: `${user.username} sent you a buddy request`,
+      message: `${user.name} sent you a buddy request`,
     });
     await notification.save();
 
     await user.save();
     await addedUser.save();
 
-    res.status(200).send({ message: "Friend request sent!" });
+    res.status(200).send({ message: "Buddy request sent!" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+};
+
+// accept buddy request
+const acceptBuddyRequest = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    const addedUser = await User.findById;
+
+    if (!user || !addedUser) {
+      return res.status(404).send({ message: "User not found" });
+    }
+
+    user.buddies = [...user.buddies, addedUser._id];
+    addedUser.buddies = [...addedUser.buddies, user._id];
+
+    user.buddyRequest = user.buddyRequest.filter(
+      (userId) => !userId.equals(addedUser._id)
+    );
+    addedUser.pendingRequest = addedUser.pendingRequest.filter(
+      (userId) => !userId.equals(user._id)
+    );
+
+    // remove notification
+    await Notification.deleteOne({
+      receiver: user._id,
+      sender: addedUser._id,
+      category: "buddyRequest",
+    });
+
+    await user.save();
+    await addedUser.save();
+
+    res.status(200).send({ message: "Buddy request accepted!" });
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "Internal Server Error" });
@@ -132,6 +187,13 @@ const cancelBuddyRequest = async (req, res) => {
       (userId) => !userId.equals(user._id)
     );
 
+    // remove notification
+    await Notification.deleteOne({
+      receiver: addedUser._id,
+      sender: user._id,
+      category: "buddyRequest",
+    });
+
     await user.save();
     await addedUser.save();
 
@@ -148,5 +210,6 @@ module.exports = {
   getAllUsers,
   sendBuddyRequest,
   getTotalUsers,
+  acceptBuddyRequest,
   cancelBuddyRequest,
 };

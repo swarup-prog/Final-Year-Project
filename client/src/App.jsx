@@ -15,6 +15,7 @@ import { fetchGames } from "./features/game/gameSlice";
 import { adminRoutes, userRoutes } from "./routes";
 import { clearActiveChat, fetchUserChats } from "./features/chat/chatSlice";
 import { Spinner } from "@chakra-ui/react";
+import { fetchNotifications } from "./features/notification/notificationSlice";
 
 function App() {
   initializeApp();
@@ -26,6 +27,7 @@ function App() {
   console.log(userToken);
 
   const user = useSelector((state) => state.user.data);
+
   let path;
   let decodedToken;
   if (userToken) {
@@ -56,6 +58,7 @@ function App() {
       dispatch(fetchUserData(decodedToken._id));
       dispatch(fetchGames());
       dispatch(fetchUserChats());
+      dispatch(fetchNotifications());
     } else {
       navigate("/login");
     }

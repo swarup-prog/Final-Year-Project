@@ -6,6 +6,7 @@ import axios from "axios";
 import { toastError } from "../../utils/toast";
 import { UserMessages } from "..";
 import io from "socket.io-client";
+import { Loading } from "../../pages";
 
 const ENDPOINT = import.meta.env.VITE_SOCKET_ENDPOINT;
 let socket, chatComapare;
@@ -131,14 +132,9 @@ const UserChat = () => {
   return (
     <div className="w-full h-full flex flex-col">
       {loading ? (
-        <Spinner
-          size={"xl"}
-          w={20}
-          h={20}
-          alignSelf={"center"}
-          margin={"auto"}
-          color={"#EF4343"}
-        />
+        <div className="text-secondary w-full h-screen bg-primary">
+          <Loading />
+        </div>
       ) : (
         <div className="flex-grow overflow-y-auto flex items-end w-full">
           <UserMessages messages={messages} />

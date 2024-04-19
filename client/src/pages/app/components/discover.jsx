@@ -7,6 +7,7 @@ import { BiSearchAlt } from "react-icons/bi";
 import { Icon } from "@chakra-ui/react";
 import { LuUserCheck2, LuUserX2 } from "react-icons/lu";
 import { fetchUserData } from "../../../features/auth/authSlice";
+import { ConnectButton } from "../../../components";
 
 const Discover = () => {
   const dispatch = useDispatch();
@@ -39,16 +40,19 @@ const Discover = () => {
       user.name.toLowerCase().includes(deferredSearch.toLowerCase())
   );
 
+  console.log(currentUser?.buddies, "buddies");
+
   const handleBuddyRequest = async (id) => {
     try {
       // make a post request to send a buddy request
       const response = await axios.patch("/user/sendBuddyRequest", {
+        userId: currentUser._id,
         addedUserId: id,
       });
       console.log(response.data);
       toastSuccess(response.data.message);
       setUpdateTrigger((prev) => !prev);
-      dispatch(fetchUserData());
+      dispatch(fetchUserData(currentUser._id));
     } catch (error) {
       console.log(error);
       toastError("Failed to send buddy request");
@@ -62,7 +66,7 @@ const Discover = () => {
       });
       console.log(response.data);
       setUpdateTrigger((prev) => !prev);
-      dispatch(fetchUserData());
+      dispatch(fetchUserData(currentUser._id));
       toastSuccess(response.data.message);
     } catch (error) {
       console.log(error);
@@ -123,28 +127,23 @@ const Discover = () => {
               {
                 /* check if user is already a buddy or not */
                 currentUser?.buddies.some((buddy) => buddy._id === user._id) ? (
-                  <button className="btn btn-accent text-white w-[130px]">
-                    <LuUserCheck2 size={25} />
-                    Buddy
-                  </button>
+                  <ConnectButton
+                    title={"Buddy"}
+                    icon={<LuUserCheck2 size={25} />}
+                  />
                 ) : currentUser?.pendingRequest.some(
                     (request) => request._id === user._id
                   ) ? (
-                  <button
-                    className="btn btn-accent text-white w-[130px]"
+                  <ConnectButton
+                    title={"Cancel"}
+                    icon={<LuUserX2 size={25} />}
                     onClick={() => handleCancelRequest(user._id)}
-                  >
-                    <LuUserX2 size={25} />
-                    Cancel
-                  </button>
+                  />
                 ) : (
-                  <button
-                    className="btn btn-accent text-white w-[130px]"
-                    onClick={() => handleBuddyRequest(user._id)}
-                  >
-                    <RiUserAddLine size={25} />
-                    Connect
-                  </button>
+                  <ConnectButton
+                    title={"Connect"}
+                    icon={<RiUserAddLine size={25} />}
+                  />
                 )
               }
 

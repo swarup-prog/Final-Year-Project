@@ -68,7 +68,7 @@ const Buddies = () => {
         {user?.buddies.length > 0 ? (
           <div>
             {user.buddies.map((buddy, k) => (
-              <BuddyListItem buddy={buddy} />
+              <BuddyListItem buddy={buddy} key={k} />
             ))}
           </div>
         ) : (
