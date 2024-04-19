@@ -130,7 +130,7 @@ const sendBuddyRequest = async (req, res) => {
 const acceptBuddyRequest = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
-    const addedUser = await User.findById;
+    const addedUser = await User.findById(req.body.addedUserId);
 
     if (!user || !addedUser) {
       return res.status(404).send({ message: "User not found" });
@@ -180,12 +180,23 @@ const cancelBuddyRequest = async (req, res) => {
       return res.status(404).send({ message: "User not found" });
     }
 
-    user.pendingRequest = user.pendingRequest.filter(
-      (userId) => !userId.equals(addedUser._id)
-    );
-    addedUser.buddyRequest = addedUser.buddyRequest.filter(
-      (userId) => !userId.equals(user._id)
-    );
+    if (req.body.type === "cancel") {
+      user.pendingRequest = user.pendingRequest.filter(
+        (userId) => !userId.equals(addedUser._id)
+      );
+      addedUser.buddyRequest = addedUser.buddyRequest.filter(
+        (userId) => !userId.equals(user._id)
+      );
+    }
+
+    if (req.body.type === "decline") {
+      user.buddyRequest = user.pendingRequest.filter(
+        (userId) => !userId.equals(addedUser._id)
+      );
+      addedUser.pendingRequest = addedUser.buddyRequest.filter(
+        (userId) => !userId.equals(user._id)
+      );
+    }
 
     // remove notification
     await Notification.deleteOne({
