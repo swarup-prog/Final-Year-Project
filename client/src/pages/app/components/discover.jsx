@@ -2,9 +2,17 @@ import { useDeferredValue, useEffect, useState } from "react";
 import { toastError, toastSuccess } from "../../../utils/toast";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { RiUserAddLine } from "react-icons/ri";
+import { RiUserAddLine, RiUserSharedLine } from "react-icons/ri";
 import { BiSearchAlt } from "react-icons/bi";
-import { Icon } from "@chakra-ui/react";
+import {
+  Icon,
+  Menu,
+  MenuButton,
+  MenuGroup,
+  MenuItem,
+  MenuList,
+  Tooltip,
+} from "@chakra-ui/react";
 import { LuUserCheck2, LuUserX2 } from "react-icons/lu";
 import { fetchUserData } from "../../../features/auth/authSlice";
 import { ConnectButton } from "../../../components";
@@ -59,10 +67,11 @@ const Discover = () => {
     }
   };
 
-  const handleCancelRequest = async (id) => {
+  const handleCancelRequest = async (id, type) => {
     try {
       const response = await axios.patch("/user/cancelBuddyRequest", {
         addedUserId: id,
+        type: type,
       });
       console.log(response.data);
       setUpdateTrigger((prev) => !prev);
@@ -137,12 +146,41 @@ const Discover = () => {
                   <ConnectButton
                     title={"Cancel"}
                     icon={<LuUserX2 size={25} />}
-                    onClick={() => handleCancelRequest(user._id)}
+                    onClick={() => handleCancelRequest(user._id, "cancel")}
                   />
+                ) : currentUser?.buddyRequest.some(
+                    (request) => request._id === user._id
+                  ) ? (
+                  <Menu>
+                    <MenuButton>
+                      <ConnectButton
+                        title={"Respond"}
+                        icon={<RiUserSharedLine size={25} />}
+                      />
+                    </MenuButton>
+
+                    <MenuList>
+                      <MenuGroup>
+                        <MenuItem icon={<LuUserCheck2 size={17} />}>
+                          Accept
+                        </MenuItem>
+                        <MenuItem
+                          icon={<LuUserX2 size={17} />}
+                          color={"#EF4343"}
+                          onClick={() =>
+                            handleCancelRequest(user._id, "decline")
+                          }
+                        >
+                          Decline
+                        </MenuItem>
+                      </MenuGroup>
+                    </MenuList>
+                  </Menu>
                 ) : (
                   <ConnectButton
                     title={"Connect"}
                     icon={<RiUserAddLine size={25} />}
+                    onClick={() => handleBuddyRequest(user._id)}
                   />
                 )
               }
