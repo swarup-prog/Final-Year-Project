@@ -11,6 +11,7 @@ import GroupChat from "./user/GroupChat";
 import UserMessages from "./user/UserMessages";
 import BuddyListItem from "./user/BuddyListItem";
 import ConnectButton from "./user/ConnectButton";
+import GoLiveModal from "./user/GoLiveModal";
 
 export {
   TextInput,
@@ -26,4 +27,5 @@ export {
   UserMessages,
   BuddyListItem,
   ConnectButton,
+  GoLiveModal,
 };

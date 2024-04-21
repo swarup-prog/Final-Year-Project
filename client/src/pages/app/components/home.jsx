@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { GoLiveModal } from "../../../components";
 
 const Home = () => {
   const [news, setNews] = useState([]);
@@ -28,7 +29,7 @@ const Home = () => {
       <section>
         <div className="flex justify-between items-center">
           <div className="text-xl text-accent font-semibold">Live</div>
-          <div className="btn btn-accent text-white">Go Live</div>
+          <GoLiveModal />
         </div>
       </section>
       <div className="divider divider-accent"></div>

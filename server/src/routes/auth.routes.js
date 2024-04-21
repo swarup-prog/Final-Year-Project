@@ -21,13 +21,11 @@ router.get("/google", passport.authenticate("google", ["profile", "email"]));
 
 router.get(
   "/google/callback",
-  passport.authenticate("google", {
-    successRedirect: process.env.GOOGLE_CLIENT_URL,
-    failureRedirect: "/login/failed",
-  })
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  function (req, res) {
+    // Successful authentication, redirect home.
+    res.redirect("/");
+  }
 );
-
-// Logout route
-router.route("/logout").post(logout);
 
 module.exports = router;

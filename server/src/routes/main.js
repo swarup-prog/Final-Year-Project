@@ -5,6 +5,7 @@ const emailRoute = require("./emailVerification.routes.js");
 const chatRoute = require("./chat.routes.js");
 const messageRoute = require("./message.routes.js");
 const notificationRoute = require("./notification.routes.js");
+const liveRoute = require("./live.routes.js");
 const { protect } = require("../middlewares/auth.middleware.js");
 
 const router = require("express").Router();
@@ -16,5 +17,6 @@ router.use("/api/email", protect, emailRoute);
 router.use("/api/chat", protect, chatRoute);
 router.use("/api/message", protect, messageRoute);
 router.use("/api/notification", protect, notificationRoute);
+router.use("/api/live", protect, liveRoute);
 
 module.exports = router;

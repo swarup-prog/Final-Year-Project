@@ -91,12 +91,9 @@ const googleOAuthFail = (req, res) => {
   });
 };
 
-const logout = async (req, res) => {};
-
 module.exports = {
   register,
   login,
-  logout,
   googleOAuthFail,
   googleOAuthSuccess,
 };

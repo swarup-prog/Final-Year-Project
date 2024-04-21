@@ -92,7 +92,7 @@ const UserApp = () => {
           </aside>
 
           <section className="p-3 w-full bg-ternary h-[91vh]">
-            <div className="bg-primary h-full rounded-md p-2">
+            <div className="bg-primary h-full rounded-md p-2 overflow-y-auto cool-scroll">
               <Outlet />
             </div>
           </section>
