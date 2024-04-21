@@ -102,7 +102,7 @@ const googleLogin = async (req, res) => {
       user = await new User({
         name: googleUser.name,
         email: googleUser.email,
-        username: googleUser.match(/^(.+)@/)[1],
+        username: googleUser.email.match(/^(.+)@/)[1],
         role: "user",
         profileImg: googleUser.picture,
         googleAuthId: googleUser.sub,

@@ -1,5 +1,5 @@
 import TextInput from "./inputFields/TextInput";
-import SideNavigation from "./navigation/SideNavigation";
+// import SideNavigation from "./navigation/SideNavigation";
 import CustomButton from "./buttons/CustomButton";
 import ThemeSwitchButton from "./buttons/ThemeSwitchButton";
 import Header from "./header/Header";
@@ -15,7 +15,6 @@ import GoLiveModal from "./user/GoLiveModal";
 
 export {
   TextInput,
-  SideNavigation,
   CustomButton,
   ThemeSwitchButton,
   Header,

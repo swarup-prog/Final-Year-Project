@@ -20,7 +20,7 @@ const GoLiveModal = () => {
     platform: "",
     url: "",
   });
-  
+
   const handleGoLive = () => {};
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -38,7 +38,6 @@ const GoLiveModal = () => {
           <ModalCloseButton />
           <ModalBody>
             <div className="flex flex-col gap-4">
-              <span>{JSON.stringify(formData)}</span>
               <TextInput label={"Stream Title"} type={"text"} />
               <Select
                 placeholder="Select platform"
@@ -55,10 +54,10 @@ const GoLiveModal = () => {
               <TextInput label={"Stream URL"} type={"text"} />
             </div>
           </ModalBody>
-          <ModalFooter>
-            <CustomButton onClick={onClose} title={"GoLive"} />
+          <ModalFooter gap="2">
+            <CustomButton onClick={handleGoLive} title={"Go Live"} />
             <CustomButton
-              onClick={handleGoLive}
+              onClick={onClose}
               title={"Close"}
               className={"bg-ternary"}
             />

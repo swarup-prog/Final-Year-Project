@@ -7,7 +7,9 @@ const Home = () => {
 
   const fetchNews = async () => {
     try {
-      const res = await axios.get(`https://fortnite-api.com/v2/news`);
+      const res = await axios.get(`https://fortnite-api.com/v2/news`, {
+        headers: {},
+      });
       console.log(res);
       setNews(res.data);
     } catch (error) {
@@ -23,7 +25,7 @@ const Home = () => {
     <div className="px-10 py-10 overflow-y-auto">
       <section>
         <div className="flex justify-between items-center">
-          <div className="text-xl text-accent font-semibold">Live</div>
+          <div className="text-xl text-secondary font-semibold">Live</div>
           <GoLiveModal />
         </div>
       </section>

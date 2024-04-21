@@ -63,7 +63,7 @@ const UserApp = () => {
               />
 
               <div className="flex flex-col justify-center items-center">
-                <span className="text-lg font-bold text-accent">
+                <span className="text-lg font-bold text-secondary">
                   {user?.name}
                 </span>
                 <span className="text-sm text-secondary">

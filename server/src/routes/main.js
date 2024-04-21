@@ -16,7 +16,7 @@ router.use("/api/game", protect, gameRoute);
 router.use("/api/email", protect, emailRoute);
 router.use("/api/chat", protect, chatRoute);
 router.use("/api/message", protect, messageRoute);
-router.use("/api/notification", protect, notificationRoute);
+router.use("/api/notifications", protect, notificationRoute);
 router.use("/api/live", protect, liveRoute);
 
 module.exports = router;

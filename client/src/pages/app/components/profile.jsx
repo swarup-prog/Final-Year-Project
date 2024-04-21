@@ -20,7 +20,9 @@ const Profile = () => {
         )}
         <div className=" mt-5 flex flex-col justify-center items-start">
           <div className="flex justify-between w-full items-center">
-            <span className="text-lg font-bold text-accent">{user?.name}</span>
+            <span className="text-lg font-bold text-secondary">
+              {user?.name}
+            </span>
             <span className="font-semibold">
               {user?.buddies.length} Buddies
             </span>

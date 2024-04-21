@@ -44,7 +44,7 @@ const Discover = () => {
 
   const filteredUsers = users.filter(
     (user) =>
-      user.username.toLowerCase().includes(deferredSearch.toLowerCase()) ||
+      user.username?.toLowerCase().includes(deferredSearch.toLowerCase()) ||
       user.name.toLowerCase().includes(deferredSearch.toLowerCase())
   );
 
@@ -89,7 +89,7 @@ const Discover = () => {
     <div className="px-10 py-10 overflow-y-auto text-secondary">
       <section>
         <div className="flex justify-between items-center">
-          <div className="text-xl text-accent font-semibold">Discover</div>
+          <div className="text-xl text-secondary font-semibold">Discover</div>
         </div>
       </section>
       <div className="divider divider-accent"></div>
@@ -110,25 +110,31 @@ const Discover = () => {
         {/* map the users to a user card check if it is in user.buddies if yes don't show conect button */}
         {data.map((user) => (
           <div
-            className="card bordered flex flex-row justify-between gap-4 p-4 mt-4"
+            className="border-b border-ternary flex flex-row justify-between gap-4 p-4 mt-4"
             key={user._id}
           >
             <div className="flex gap-5 justify-center items-center">
-              {user?.profileImg ? (
-                <img
-                  src={user.profileImg}
-                  alt="profileImage"
-                  width={100}
-                  className="rounded-full"
-                />
-              ) : (
-                <div className="w-[60px] h-[60px] rounded-full bg-ternary border-2 border-accent flex justify-center items-center text-3xl font-light text-accent">
-                  {user?.name[0]}
-                </div>
-              )}
+              <img
+                src={user.profileImg}
+                alt="profileImage"
+                width={100}
+                className="rounded-full"
+              />
+
               <div className="flex flex-col justify-center items-start">
-                <div className="text-lg font-semibold">{user.name}</div>
+                <div
+                  className={`text-lg font-semibold cursor-pointer hover:text-accent`}
+                >
+                  {user.name}
+                </div>
                 <div className="text-sm">@{user.username}</div>
+                <div className="mt-3">
+                  {user.interestedGames?.map((game, key) => (
+                    <div className="badge badge-primary mr-2" key={key}>
+                      {game.name}
+                    </div>
+                  ))}
+                </div>
                 <div className="mt-3">{user.bio}</div>
               </div>
             </div>

@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import { Header, SideNavigation, ThemeSwitchButton } from "../../components";
+import { Header } from "../../components";
 import adminRoutes from "../../routes/adminRoutes";
 import Tab from "../../components/navigation/Tab";
 

@@ -4,13 +4,19 @@ import axios from "axios";
 const initialState = {
   loading: false,
   data: null,
+  unreadCount: 0,
   error: null,
 };
 
 export const fetchNotifications = createAsyncThunk(
   "notification/",
   async () => {
-    const response = await axios.get("/notification");
+    const response = await axios.get("/notifications", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("session-token")}`,
+      },
+    });
+    console.log(response);
     return response.data;
   }
 );
@@ -25,7 +31,8 @@ const notificationSlice = createSlice({
     });
     builder.addCase(fetchNotifications.fulfilled, (state, action) => {
       state.loading = false;
-      state.data = action.payload;
+      state.data = action.payload.notifications;
+      state.unreadCount = action.payload.unreadCount;
     });
     builder.addCase(fetchNotifications.rejected, (state, action) => {
       state.loading = false;
