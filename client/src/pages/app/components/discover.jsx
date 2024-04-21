@@ -67,6 +67,21 @@ const Discover = () => {
     }
   };
 
+  const handleAcceptRequest = async (id) => {
+    try {
+      const response = await axios.patch("/user/acceptBuddyRequest", {
+        addedUserId: id,
+      });
+      console.log(response.data);
+      setUpdateTrigger((prev) => !prev);
+      dispatch(fetchUserData(currentUser._id));
+      toastSuccess(response.data.message);
+    } catch (error) {
+      console.log(error);
+      toastError("Failed to accept request");
+    }
+  };
+
   const handleCancelRequest = async (id, type) => {
     try {
       const response = await axios.patch("/user/cancelBuddyRequest", {
@@ -167,7 +182,10 @@ const Discover = () => {
 
                     <MenuList>
                       <MenuGroup>
-                        <MenuItem icon={<LuUserCheck2 size={17} />}>
+                        <MenuItem
+                          icon={<LuUserCheck2 size={17} />}
+                          onClick={() => handleAcceptRequest(user._id)}
+                        >
                           Accept
                         </MenuItem>
                         <MenuItem
