@@ -112,7 +112,7 @@ const sendBuddyRequest = async (req, res) => {
       receiver: addedUser._id,
       category: "buddyRequest",
       sender: user._id,
-      message: `${user.name} sent you a buddy request`,
+      message: `${user.name} sent you a buddy request.`,
     });
     await notification.save();
 
@@ -147,11 +147,13 @@ const acceptBuddyRequest = async (req, res) => {
     );
 
     // remove notification
-    await Notification.deleteOne({
-      receiver: user._id,
-      sender: addedUser._id,
-      category: "buddyRequest",
+    const notification = new Notification({
+      receiver: addedUser._id,
+      category: "acceptBuddyRequest",
+      sender: user._id,
+      message: `${user.name} accept your buddy request.`,
     });
+    await notification.save();
 
     await user.save();
     await addedUser.save();
