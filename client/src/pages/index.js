@@ -27,8 +27,10 @@ import Messages from "./app/components/messages";
 import Community from "./app/components/community";
 import Notifications from "./app/components/notifications";
 import Chat from "./app/components/chat";
+import Authenticate from "./auth/Authenticate";
 
 export {
+  Authenticate,
   Login,
   Signup,
   Admin,

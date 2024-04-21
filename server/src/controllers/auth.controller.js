@@ -16,8 +16,8 @@ const register = async (req, res) => {
     if (!body.role) body = { ...body, role: "user" };
 
     //Giving Username
-    const genUsername = body.email.match(/^(.+)@/)[1];
-    body = { ...body, username: genUsername };
+    // const genUsername = body.email.match(/^(.+)@/)[1];
+    // body = { ...body, username: genUsername };
 
     // Checking if user already exists
     const user = await User.findOne({ email: body.email });
@@ -91,9 +91,40 @@ const googleOAuthFail = (req, res) => {
   });
 };
 
+const googleLogin = async (req, res) => {
+  try {
+    // console.log(req.user);
+    const googleUser = req.user?._json;
+    // console.log(googleUser, "googleUser");
+
+    let user = await User.findOne({ email: googleUser.email });
+    if (!user) {
+      user = await new User({
+        name: googleUser.name,
+        email: googleUser.email,
+        username: googleUser.match(/^(.+)@/)[1],
+        role: "user",
+        profileImg: googleUser.picture,
+        googleAuthId: googleUser.sub,
+      }).save();
+    } else {
+      user.googleAuthId = googleUser.sub;
+      // console.log(user, "user");
+      await user.save();
+    }
+
+    const token = user.generateAuthToken();
+    res.redirect(
+      `${process.env.GOOGLE_CLIENT_URL}/authenticating/?token=${token}`
+    );
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: error });
+  }
+};
+
 module.exports = {
   register,
   login,
-  googleOAuthFail,
-  googleOAuthSuccess,
+  googleLogin,
 };

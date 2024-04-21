@@ -10,6 +10,7 @@ const checkAuth = () => {
     "/signup",
     "/forgot-password",
     "/reset-password",
+    "/authenticating",
   ];
 
   const isPublicPage = PUBLIC_ROUTES.some((r) =>

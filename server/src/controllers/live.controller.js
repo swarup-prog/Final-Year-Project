@@ -1,4 +1,5 @@
 const Live = require("../models/Live");
+const { User } = require("../models/User");
 
 const goLive = async (req, res) => {
   const { title, platform, url } = req.body;
@@ -14,11 +15,17 @@ const goLive = async (req, res) => {
 };
 
 const getLiveBuddies = async (req, res) => {
-  const user = req.user._id;
-
   try {
+    // Retrieve the user from the database
+    const user = await User.findById(req.user._id);
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
     // Find all the live streams of the user's buddies
-    const live = await Live.find({ user: { $in: user.buddies } });
+    const live = await Live.find({ user: { $in: user.buddies } }).populate(
+      "user",
+      "password -0"
+    );
     res.status(200).json(live);
   } catch (error) {
     res.status(500).json({ message: error.message });

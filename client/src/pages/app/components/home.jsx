@@ -7,12 +7,7 @@ const Home = () => {
 
   const fetchNews = async () => {
     try {
-      const aeskey = await axios.get("https://fortnite-api.com/v2/aes");
-      const res = await axios.get(`https://fortnite-api.com/v2/news`, {
-        headers: {
-          apikey: aeskey.data.data.mainKey,
-        },
-      });
+      const res = await axios.get(`https://fortnite-api.com/v2/news`);
       console.log(res);
       setNews(res.data);
     } catch (error) {

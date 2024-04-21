@@ -5,7 +5,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import { fetchUserData } from "./features/auth/authSlice";
 
-import { Admin, Error, Login, Signup, GameSelection, UserApp } from "./pages";
+import {
+  Admin,
+  Error,
+  Login,
+  Signup,
+  GameSelection,
+  UserApp,
+  Authenticate,
+} from "./pages";
 import { useEffect } from "react";
 import PrivateRoutes from "./utils/PrivateRoutes";
 
@@ -59,8 +67,6 @@ function App() {
       dispatch(fetchGames());
       dispatch(fetchUserChats());
       dispatch(fetchNotifications());
-    } else {
-      navigate("/login");
     }
   }, [dispatch, userToken]);
 
@@ -68,6 +74,7 @@ function App() {
     <div>
       <Toaster theme={isDarkMode ? "dark" : "light"} richColors={true} />
       <Routes>
+        <Route path="/authenticating" element={<Authenticate />} />
         <Route
           path="*"
           element={<Navigate to={userToken ? path : "/login"} replace />}

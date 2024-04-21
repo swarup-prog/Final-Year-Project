@@ -15,6 +15,7 @@ const Signup = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    username: "",
     password: "",
     confirmPassword: "",
   });
@@ -89,6 +90,13 @@ const Signup = () => {
             name="email"
             label="Email"
             value={formData.email}
+            onChange={handleChange}
+          />
+          <TextInput
+            type="text"
+            name="username"
+            label="Username"
+            value={formData.username}
             onChange={handleChange}
           />
 

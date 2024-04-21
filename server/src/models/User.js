@@ -15,11 +15,10 @@ const userSchema = new mongoose.Schema(
     },
     username: {
       type: String,
-      required: true,
+      // required: true,
     },
     password: {
       type: String,
-      required: true,
     },
     role: {
       type: String,
@@ -55,6 +54,10 @@ const userSchema = new mongoose.Schema(
       ref: "User",
       default: [],
     },
+    googleAuthId: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true }
 );
@@ -80,7 +83,7 @@ const validate = (data) => {
   const schema = Joi.object({
     name: Joi.string().required().label("First Name"),
     email: Joi.string().required().label("Email"),
-    password: passwordComplexity().required().label("Password"),
+    // password: passwordComplexity().required().label("Password"),
   });
   return schema.validate(data);
 };
