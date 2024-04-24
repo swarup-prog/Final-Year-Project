@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../buttons/CustomButton";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setActiveChat } from "../../features/chat/chatSlice";
 
 const UserListItem = ({
@@ -11,7 +11,7 @@ const UserListItem = ({
   name,
   username,
   isMessage = false,
-  onClick = () => {},
+  messageController = () => {},
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -24,11 +24,10 @@ const UserListItem = ({
       }`
     );
   };
+
+  const userChat = useSelector((state) => state.chat.data);
   return (
-    <div
-      className="card bordered flex flex-row justify-between gap-4 p-4 mt-4 w-full cursor-pointer hover:bg-ternary hover:border-accent transition duration-300 ease-in-out"
-      onClick={onClick}
-    >
+    <div className="border-b border-ternary flex flex-row justify-between gap-4 p-4 mt-4 w-full cursor-pointer hover:bg-ternary hover:border-accent transition duration-300 ease-in-out">
       <div className="flex gap-5 justify-center items-center">
         {profileImg ? (
           <img
@@ -48,10 +47,7 @@ const UserListItem = ({
       </div>
       {isMessage && (
         <div className="flex flex-col justify-center items-center gap-4">
-          <CustomButton
-            title="Message"
-            onClick={() => handleMessageClick(chat)}
-          />
+          <CustomButton title="Message" onClick={messageController} />
         </div>
       )}
     </div>

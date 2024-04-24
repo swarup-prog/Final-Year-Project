@@ -8,6 +8,6 @@ const router = require("express").Router();
 
 router.post("/go-live", goLive);
 router.get("/get-live-buddies", getLiveBuddies);
-router.delete("/end-live/:id", endLive);
+router.delete("/end-live", endLive);
 
 module.exports = router;

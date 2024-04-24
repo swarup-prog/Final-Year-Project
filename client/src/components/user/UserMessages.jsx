@@ -14,39 +14,41 @@ const Messages = ({ messages }) => {
   }, [messages]);
 
   return (
-    <ScrollableFeed className="w-full max-h-full ">
-      {messages &&
-        messages.map((m, i) => (
-          <div
-            key={m._id}
-            className={`chat ${
-              m.sender._id === user?._id ? "chat-end" : "chat-start"
-            }`}
-          >
-            <div className="chat-image avatar">
-              <div className="w-10 rounded-full">
-                <img alt="profile" src={m.sender.profileImg} />
-              </div>
-            </div>
-            <div className="chat-header">
-              {m.sender.name}
-              <time className="ml-2 text-xs opacity-50">
-                {formatDate(m.createdAt)}
-              </time>
-            </div>
+    <ScrollableFeed className="w-full h-full ">
+      <div className="flex flex-col w-full h-full justify-end">
+        {messages &&
+          messages.map((m, i) => (
             <div
-              className={`chat-bubble ${
-                m.sender._id === user?._id
-                  ? "bg-accent text-white"
-                  : "bg-ternary"
+              key={m._id}
+              className={`chat ${
+                m.sender._id === user?._id ? "chat-end" : "chat-start"
               }`}
             >
-              {m.content}
+              <div className="chat-image avatar">
+                <div className="w-10 rounded-full">
+                  <img alt="profile" src={m.sender.profileImg} />
+                </div>
+              </div>
+              <div className="chat-header">
+                {m.sender.name}
+                <time className="ml-2 text-xs opacity-50">
+                  {formatDate(m.createdAt)}
+                </time>
+              </div>
+              <div
+                className={`chat-bubble ${
+                  m.sender._id === user?._id
+                    ? "bg-accent text-white"
+                    : "bg-ternary"
+                }`}
+              >
+                {m.content}
+              </div>
+              <div className="chat-footer opacity-50">Delivered</div>
             </div>
-            <div className="chat-footer opacity-50">Delivered</div>
-          </div>
-        ))}
-      <div ref={endOfMessages}></div> {/* Step 3 */}
+          ))}
+        <div ref={endOfMessages}></div> {/* Step 3 */}
+      </div>
     </ScrollableFeed>
   );
 };

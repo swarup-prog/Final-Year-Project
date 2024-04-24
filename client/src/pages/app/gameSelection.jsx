@@ -23,7 +23,6 @@ const GameSelection = () => {
       // If the game ID is not in the formData.games array, add it
       setSelectedGame([...selectedGame, id]);
     }
-    console.log(selectedGame);
   };
 
   const handleGameSelection = async () => {
@@ -58,8 +57,7 @@ const GameSelection = () => {
         </span>
       </section>
       <section className="flex flex-col items-center">
-        <span>{selectedGame}</span>
-        <div className="text-accent  text-2xl font-semibold mb-5">
+        <div className="text-secondary  text-2xl font-semibold mb-5">
           Choose a Game
         </div>
         <div className="flex gap-5 flex-wrap">

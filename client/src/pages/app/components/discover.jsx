@@ -16,9 +16,11 @@ import {
 import { LuUserCheck2, LuUserX2 } from "react-icons/lu";
 import { fetchUserData } from "../../../features/auth/authSlice";
 import { ConnectButton } from "../../../components";
+import { useNavigate } from "react-router-dom";
 
 const Discover = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [users, setUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -209,7 +211,10 @@ const Discover = () => {
                 )
               }
 
-              <button className="text-accent font-semibold hover:underline">
+              <button
+                className="text-accent font-semibold hover:underline"
+                onClick={() => navigate(`/app/discover/profile/${user._id}`)}
+              >
                 View Profile
               </button>
             </div>

@@ -12,6 +12,9 @@ import UserMessages from "./user/UserMessages";
 import BuddyListItem from "./user/BuddyListItem";
 import ConnectButton from "./user/ConnectButton";
 import GoLiveModal from "./user/GoLiveModal";
+import UserChatCard from "./user/UserChatCard";
+import GameCard from "./cards/GameCard";
+import PublishNewsModal from "./admin/PublishNewsModal";
 
 export {
   TextInput,
@@ -27,4 +30,7 @@ export {
   BuddyListItem,
   ConnectButton,
   GoLiveModal,
+  UserChatCard,
+  GameCard,
+  PublishNewsModal,
 };

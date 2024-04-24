@@ -8,6 +8,7 @@ const {
   getTotalUsers,
   acceptBuddyRequest,
   cancelBuddyRequest,
+  unfriendBuddy,
 } = require("../controllers/user.controller");
 
 router.route("/getUserInfo/:id").get(getUserInfo);
@@ -18,5 +19,6 @@ router.route("/updateInterestedgame").patch(updateInterestedGames);
 router.route("/sendBuddyRequest").patch(sendBuddyRequest);
 router.route("/acceptBuddyRequest").patch(acceptBuddyRequest);
 router.route("/cancelBuddyRequest").patch(cancelBuddyRequest);
+router.route("/unfriendBuddy").patch(unfriendBuddy);
 
 module.exports = router;

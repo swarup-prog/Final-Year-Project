@@ -1,5 +1,5 @@
 import React, { useDeferredValue, useEffect, useState } from "react";
-import { CustomButton, CustomModal, TextInput } from "../../../components";
+import { CustomButton, CustomModal, TextInput, UserChatCard } from "../../../components";
 import { useSelector } from "react-redux";
 import { toastError, toastSuccess } from "../../../utils/toast";
 import axios from "axios";
@@ -38,6 +38,7 @@ const Messages = () => {
   const accessChat = (id) => async () => {
     try {
       const { data } = await axios.post("/chat", { userId: id });
+      console.log(data);
       dispatch(fetchUserChats());
     } catch (error) {
       console.log(error);
@@ -120,6 +121,7 @@ const Messages = () => {
                     username={buddy.username}
                     profileImg={buddy.profileImg}
                     isMessage={true}
+                    messageController={accessChat(buddy._id)}
                   />
                 ))
               ) : (
@@ -212,7 +214,7 @@ const Messages = () => {
               chat.isGroupChat ? (
                 <div
                   key={chat._id}
-                  className="card bordered flex flex-row justify-between gap-4 p-4 mt-4 w-full cursor-pointer hover:bg-ternary hover:border-accent transition duration-300 ease-in-out"
+                  className="border-b border-ternary flex flex-row justify-between gap-4 p-4 mt-4 w-full cursor-pointer hover:bg-ternary hover:border-accent transition duration-300 ease-in-out"
                 >
                   <div className="flex gap-5 justify-center items-center">
                     <div className="w-[60px] h-[60px] rounded-full bg-ternary border-2 border-accent flex justify-center items-center text-3xl font-light text-accent">
@@ -235,14 +237,13 @@ const Messages = () => {
                   </div>
                 </div>
               ) : (
-                <UserListItem
+                <UserChatCard
                   key={chat._id}
                   id={chat._id}
                   chat={chat}
                   name={getSenderFull(user?._id, chat.users).name}
                   profileImg={getSenderFull(user?._id, chat.users).profileImg}
                   username={getSenderFull(user?._id, chat.users).username}
-                  isMessage={true}
                 />
               )
             )

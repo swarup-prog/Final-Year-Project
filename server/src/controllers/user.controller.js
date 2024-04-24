@@ -217,6 +217,29 @@ const cancelBuddyRequest = async (req, res) => {
   }
 };
 
+const unfriendBuddy = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    const buddy = await User.findById(req.body.buddyId);
+    if (!user || !buddy) {
+      return res.status(404).send({ message: "User not found" });
+    }
+
+    user.buddies = user.buddies.filter((buddyId) => !buddyId.equals(buddy._id));
+    buddy.buddies = buddy.buddies.filter(
+      (buddyId) => !buddyId.equals(user._id)
+    );
+
+    await user.save();
+    await buddy.save();
+
+    res.status(200).send({ message: "Buddy removed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   getUserInfo,
   updateInterestedGames,
@@ -225,4 +248,5 @@ module.exports = {
   getTotalUsers,
   acceptBuddyRequest,
   cancelBuddyRequest,
+  unfriendBuddy,
 };

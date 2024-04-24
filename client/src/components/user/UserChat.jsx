@@ -18,8 +18,8 @@ const UserChat = () => {
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
   const [socketConnected, setSocketConnected] = useState(false);
-  // const [typing, setTyping] = useState(false);
-  // const [isTyping, setIsTyping] = useState(false);
+  const [typing, setTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -28,12 +28,12 @@ const UserChat = () => {
       socket.on("connected", () => {
         setSocketConnected(true);
       });
-      // socket.on("typing", () => {
-      //   setIsTyping(true);
-      // });
-      // socket.on("stop typing", () => {
-      //   setIsTyping(false);
-      // });
+      socket.on("typing", () => {
+        setIsTyping(true);
+      });
+      socket.on("stop typing", () => {
+        setIsTyping(false);
+      });
     }
     return () => {
       if (socket) {
@@ -79,25 +79,25 @@ const UserChat = () => {
     setNewMessage(e.target.value);
 
     // Typing
-    // if (!socketConnected) return;
+    if (!socketConnected) return;
 
-    // if (!typing) {
-    //   setTyping(true);
-    //   socket.emit("typing", chat._id);
-    // }
+    if (!typing) {
+      setTyping(true);
+      socket.emit("typing", chat._id);
+    }
 
-    // let lastTypingTime = new Date().getTime();
+    let lastTypingTime = new Date().getTime();
 
-    // let timerLength = 3000;
-    // setTimeout(() => {
-    //   let timeNow = new Date().getTime();
-    //   let timeDiff = timeNow - lastTypingTime;
+    let timerLength = 3000;
+    setTimeout(() => {
+      let timeNow = new Date().getTime();
+      let timeDiff = timeNow - lastTypingTime;
 
-    //   if (timeDiff >= timerLength && typing) {
-    //     socket.emit("stop typing", chat._id);
-    //     setTyping(false);
-    //   }
-    // }, timerLength);
+      if (timeDiff >= timerLength && typing) {
+        socket.emit("stop typing", chat._id);
+        setTyping(false);
+      }
+    }, timerLength);
   };
 
   const handleKeyPress = async (e) => {
@@ -108,7 +108,7 @@ const UserChat = () => {
   };
 
   const sendMessage = async () => {
-    // socket.emit("stop typing", chat._id);
+    socket.emit("stop typing", chat._id);
     try {
       setNewMessage(""); // Move inside the try block after successful post
       const response = await axios.post("/message", {
@@ -136,8 +136,13 @@ const UserChat = () => {
           <Loading />
         </div>
       ) : (
-        <div className="flex-grow overflow-y-auto flex items-end w-full">
+        <div className="flex-grow overflow-y-auto flex flex-col w-full h-screen">
           <UserMessages messages={messages} />
+          {isTyping && (
+            <div className="text-secondary p-2 text-sm">
+              <span>Typing...</span>
+            </div>
+          )}
         </div>
       )}
       <form

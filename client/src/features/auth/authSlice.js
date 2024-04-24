@@ -11,7 +11,6 @@ export const fetchUserData = createAsyncThunk(
   "auth/fetchUserData",
   async (id) => {
     const response = await axios.get(`/user/getUserInfo/${id}`);
-    console.log("entered fetchUserData", response.data);
     return response.data;
   }
 );

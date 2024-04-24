@@ -10,6 +10,7 @@ import {
   Messages,
   Notifications,
   Profile,
+  ProfileDiscover,
   Reports,
   Users,
 } from "../pages";
@@ -30,6 +31,10 @@ const userRoutes = [
   {
     path: "/app/discover",
     element: <Discover />,
+  },
+  {
+    path: "/app/discover/profile/:userId",
+    element: <ProfileDiscover />,
   },
   {
     path: "/app/messages",

@@ -28,6 +28,7 @@ import Community from "./app/components/community";
 import Notifications from "./app/components/notifications";
 import Chat from "./app/components/chat";
 import Authenticate from "./auth/Authenticate";
+import ProfileDiscover from "./app/components/profileDiscover";
 
 export {
   Authenticate,
@@ -53,4 +54,5 @@ export {
   Notifications,
   Chat,
   Reports,
+  ProfileDiscover,
 };

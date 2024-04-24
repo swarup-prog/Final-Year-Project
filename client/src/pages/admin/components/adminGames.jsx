@@ -6,7 +6,7 @@ const AdminGames = () => {
   return (
     <div className="text-secondary px-10 py-10 overflow-y-auto">
       <section>
-        <div className="text-xl text-accent font-semibold">Games</div>
+        <div className="text-xl text-secondary font-semibold">Games</div>
       </section>
       <div className="divider divider-accent"></div>
       <div className="overflow-x-auto mx-5">

@@ -1,23 +1,12 @@
-const { User, validate } = require("../models/User.js");
+const { User } = require("../models/User.js");
 const bcrypt = require("bcrypt");
-const passport = require("passport");
 
 const register = async (req, res) => {
   let body = { ...req.body };
 
   try {
-    // Validate the user input
-    const { error } = validate(body);
-    if (error) {
-      return res.status(400).send(error.details[0].message);
-    }
-
     // Giving default role: user
     if (!body.role) body = { ...body, role: "user" };
-
-    //Giving Username
-    // const genUsername = body.email.match(/^(.+)@/)[1];
-    // body = { ...body, username: genUsername };
 
     // Checking if user already exists
     const user = await User.findOne({ email: body.email });
@@ -72,30 +61,10 @@ const login = async (req, res) => {
   }
 };
 
-const googleOAuthSuccess = (req, res) => {
-  if (req.user) {
-    res.status(200).json({
-      error: false,
-      message: "Successfully Loged In",
-      user: req.user,
-    });
-  } else {
-    res.status(403).json({ error: true, message: "Not Authorized" });
-  }
-};
-
-const googleOAuthFail = (req, res) => {
-  res.status(401).json({
-    error: true,
-    message: "Log in failure",
-  });
-};
 
 const googleLogin = async (req, res) => {
   try {
-    // console.log(req.user);
     const googleUser = req.user?._json;
-    // console.log(googleUser, "googleUser");
 
     let user = await User.findOne({ email: googleUser.email });
     if (!user) {

@@ -5,6 +5,8 @@ import {
   gameReducer,
   chatReducer,
   notificationReducer,
+  liveReducer,
+  newsReducer,
 } from "../features";
 
 export const store = configureStore({
@@ -14,5 +16,7 @@ export const store = configureStore({
     games: gameReducer,
     chat: chatReducer,
     notifications: notificationReducer,
+    liveStreams: liveReducer,
+    news: newsReducer,
   },
 });

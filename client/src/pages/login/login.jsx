@@ -24,6 +24,10 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.username || !formData.password) {
+      toastError("All fields are required");
+      return;
+    }
     try {
       const response = await axios.post("/auth/login", formData);
       if (response.status === 200) {

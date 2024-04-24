@@ -8,6 +8,7 @@ import bgimg from "../../assets/bgimg.jpg";
 import { BiLogoGoogle } from "react-icons/bi";
 import { toastError, toastSuccess } from "../../utils/toast";
 import { PostRequest } from "../../services/httpRequest";
+import axios from "axios";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -35,10 +36,20 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // setIsLoading(true);
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.username ||
+      !formData.password
+    ) {
+      toastError("Please fill all the fields");
+      return;
+    }
     const { confirmPassword, ...formDataRequest } = formData;
     if (checkPasswordMatch()) {
       try {
-        const response = await PostRequest("/auth/register", formDataRequest);
+        const response = await axios.post("/auth/register", formDataRequest);
+        console.log(response);
         if (response.status === 201) {
           toastSuccess(response.data.message);
           navigate("/login");

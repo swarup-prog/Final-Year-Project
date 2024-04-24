@@ -24,6 +24,8 @@ import { adminRoutes, userRoutes } from "./routes";
 import { clearActiveChat, fetchUserChats } from "./features/chat/chatSlice";
 import { Spinner } from "@chakra-ui/react";
 import { fetchNotifications } from "./features/notification/notificationSlice";
+import { fetchLiveData } from "./features/live/liveSlice";
+import { fetchNews } from "./features/news/newsSlice";
 
 function App() {
   initializeApp();
@@ -45,7 +47,7 @@ function App() {
       path = "/admin/dashboard";
     } else {
       path = "/app/home";
-      if (user && user.interestedGames?.length === 0) {
+      if (user && user.role !== "admin" && user.interestedGames?.length === 0) {
         console.log("length", user?.interestedGames.length);
         navigate("/gameSelection");
       }
@@ -63,10 +65,13 @@ function App() {
 
   useEffect(() => {
     if (userToken) {
+      console.log("fetching user data");
       dispatch(fetchUserData(decodedToken._id));
       dispatch(fetchGames());
       dispatch(fetchUserChats());
       dispatch(fetchNotifications());
+      dispatch(fetchLiveData());
+      dispatch(fetchNews());
     }
   }, [dispatch, userToken]);
 
